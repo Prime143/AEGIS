@@ -381,7 +381,7 @@ export default function App() {
               className="flex-1 flex flex-col md:flex-row overflow-hidden"
             >
               {/* Admin Slim Sidebar */}
-              <div className="w-full md:w-20 h-16 md:h-auto glass-panel border-y border-x-0 md:border-y-0 md:border-l-0 md:border-r border-slate-800/50 flex flex-row md:flex-col items-center justify-center md:py-6 space-x-6 md:space-x-0 md:space-y-6 z-30 order-last md:order-first shrink-0">
+              <div className="w-full md:w-20 h-16 md:h-auto glass-panel border-y border-x-0 md:border-y-0 md:border-l-0 md:border-r border-slate-800/50 flex flex-row md:flex-col items-center justify-center md:justify-start md:pt-8 md:pb-6 space-x-6 md:space-x-0 md:space-y-6 z-30 order-last md:order-first shrink-0">
                 <button 
                   onClick={() => setAdminTab('live')} 
                   className={`p-3 rounded-xl transition-all ${adminTab === 'live' ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]' : 'text-slate-500 hover:text-slate-300'}`} 
@@ -464,6 +464,31 @@ export default function App() {
                           </div>
                         </div>
                         <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+                          {/* Demo Injector */}
+                          <div className="p-3 mb-2 rounded-xl bg-slate-900/40 border border-slate-800 flex items-center gap-2">
+                            <form 
+                              className="w-full flex gap-2"
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                const form = e.target as HTMLFormElement;
+                                const input = form.elements.namedItem('demoPrompt') as HTMLInputElement;
+                                if (input.value.trim()) {
+                                  analyzeTraffic(input.value.trim(), 'demo.user@nexus-corp.com', true);
+                                  input.value = '';
+                                }
+                              }}
+                            >
+                              <input 
+                                name="demoPrompt" 
+                                type="text" 
+                                placeholder="Inject custom prompt for demo..." 
+                                className="flex-1 bg-slate-950 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500/50" 
+                              />
+                              <button type="submit" className="bg-slate-800 hover:bg-slate-700 text-cyan-400 px-3 py-2 rounded-lg border border-slate-700/50 transition-colors">
+                                <Send className="w-4 h-4" />
+                              </button>
+                            </form>
+                          </div>
                           {events.slice(0, 8).map((event) => (
                             <div 
                               key={event.id}
