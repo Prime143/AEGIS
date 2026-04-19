@@ -192,16 +192,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 relative overflow-hidden flex flex-col">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
+      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-to-r from-cyan-500/15 via-blue-600/15 to-purple-600/15 blur-[120px] rounded-full pointer-events-none" />
       
       {/* Global Header */}
-      <header className="relative z-10 glass-panel border-b-0 border-slate-800/50 px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <header className="relative z-10 glass-panel mx-4 md:mx-6 mt-4 rounded-2xl border-white/5 px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center space-x-4">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-[0_0_20px_rgba(6,182,212,0.4)] shrink-0">
-            <Shield className="w-5 h-5 text-white" />
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-[0_0_20px_rgba(6,182,212,0.5)] shrink-0 border border-white/10">
+            <Shield className="w-5 h-5 text-white drop-shadow-md" />
           </div>
           <div className="text-center sm:text-left">
             <h1 className="text-base md:text-lg font-bold text-white tracking-wide flex items-center justify-center sm:justify-start">
@@ -242,11 +242,12 @@ export default function App() {
               className="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-12"
             >
               <div className="max-w-5xl mx-auto space-y-8">
-                <div className="text-center space-y-4 mb-12">
-                  <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                    Proactive Prompt <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Sanitization</span>
+                <div className="text-center space-y-4 mb-12 relative">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[100px] bg-cyan-500/20 blur-[60px] rounded-full pointer-events-none" />
+                  <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight leading-tight relative z-10">
+                    Proactive Prompt <br className="md:hidden" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]">Sanitization</span>
                   </h2>
-                  <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                  <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base relative z-10 font-medium leading-relaxed">
                     Before sending sensitive queries to external AI tools, use Aegis to automatically redact PII, financial data, and internal secrets while preserving your intent.
                   </p>
                 </div>
@@ -305,8 +306,9 @@ export default function App() {
                     <button
                       onClick={handleEmployeeSubmit}
                       disabled={isAnalyzing || !employeePrompt.trim() || systemStatus === 'lockdown'}
-                      className="mt-6 w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]"
+                      className="mt-6 w-full glass-button text-cyan-50 font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center relative overflow-hidden group"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                       {isAnalyzing ? (
                         <><Activity className="w-5 h-5 mr-2 animate-spin" /> Analyzing Context...</>
                       ) : (
