@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs/promises';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { GoogleGenAI, Type } from '@google/genai';
@@ -85,6 +86,9 @@ async function startServer() {
 
         if (response.text) {
           const result = JSON.parse(response.text);
+          try {
+            await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [GEMINI] USER: ${user} | ACTION: ${result.action} | SCORE: ${result.risk_score} | PROMPT: ${text}\n`, 'utf8');
+          } catch(e) { console.error(e); }
           return res.json({ ...result, original_prompt: text, user });
         }
       } else {
@@ -121,7 +125,7 @@ async function startServer() {
         redact: '[REDACTED_DB_URI]' 
       },
       { 
-        pattern: /(?:password|passwd|pwd|secret|api[_\-]?key|auth[_\-]?token|access[_\-]?token)\s*[:=]\s*['"]?[^\s"']+['"]?/gi,
+        pattern: /(?:password|passwd|pwd|secret|api[_\-]?key|auth[_\-]?token|access[_\-]?token|key)(?:\s+(?:is|are)\s*[:=\-]?\s*|\s*[:=\-]\s*)\s*['"]?[^\s"']+['"]?/gi,
         score: 80, 
         reason: 'Detected cleartext secret assignment', 
         redact: '[REDACTED_SECRET]' 
@@ -133,10 +137,52 @@ async function startServer() {
         redact: '[REDACTED_JWT]'
       },
       { 
-        pattern: /(?:\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b)/g,
+        pattern: /(?:\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b|\b\d{15,16}\b)/g,
         score: 75,
         reason: 'Detected potential financial data (Credit Card)',
         redact: '[REDACTED_CREDIT_CARD]'
+      },
+      {
+        pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/gi,
+        score: 50,
+        reason: 'Detected Email Address (PII)',
+        redact: '[REDACTED_EMAIL]'
+      },
+      {
+        pattern: /\b\d{3}[-\s]?\d{2}[-\s]?\d{4}\b/g,
+        score: 80,
+        reason: 'Detected US Social Security Number (SSN)',
+        redact: '[REDACTED_SSN]'
+      },
+      {
+        pattern: /\b(?:\+?1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}\b/g,
+        score: 50,
+        reason: 'Detected North American Phone Number (PII)',
+        redact: '[REDACTED_PHONE]'
+      },
+      {
+        pattern: /\b(?:0x[a-fA-F0-9]{40}|bc1[a-z0-9]{39,59}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\b/g,
+        score: 75,
+        reason: 'Detected Cryptocurrency Wallet Address',
+        redact: '[REDACTED_CRYPTO_ADDRESS]'
+      },
+      {
+        pattern: /(?:s3:\/\/[^\s]+|gs:\/\/[^\s]+|https:\/\/[^\s]+\.s3\.amazonaws\.com)/gi,
+        score: 80,
+        reason: 'Detected Cloud Storage URI',
+        redact: '[REDACTED_CLOUD_STORAGE]'
+      },
+      {
+        pattern: /\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b/g,
+        score: 40,
+        reason: 'Detected IP Address',
+        redact: '[REDACTED_IP]'
+      },
+      {
+        pattern: /-----BEGIN(?: RSA)? PRIVATE KEY-----[A-Za-z0-9+/\s=]+-----END(?: RSA)? PRIVATE KEY-----/g,
+        score: 100,
+        reason: 'Detected RSA Private Key',
+        redact: '[REDACTED_PRIVATE_KEY]'
       }
     ];
 
@@ -152,11 +198,11 @@ async function startServer() {
     const keywordRules = [
       { keywords: ['password', 'credentials', 'admin123', 'supersecret99'], score: 50, reason: 'Contains sensitive authentication terms', redact: '[REDACTED_CREDENTIALS]' },
       { keywords: ['api key', 'secret key', 'access token', 'auth token'], score: 60, reason: 'Mentions API or access keys', redact: '[REDACTED_KEY_REFERENCE]' },
-      { keywords: ['company db', 'client data', 'prod-db', 'database', 'internal db'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
-      { keywords: ['confidential', 'internal only', 'proprietary'], score: 40, reason: 'Contains confidential or internal markers', redact: '[CONFIDENTIAL]' },
-      { keywords: ['financial', 'revenue', '$'], score: 30, reason: 'Mentions financial metrics', redact: '[FINANCIAL_METRIC]' },
+      { keywords: ['company db', 'client data', 'prod-db', 'database', 'internal db', 'customer list'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
+      { keywords: ['confidential', 'internal only', 'proprietary', 'trade secret', 'do not share'], score: 40, reason: 'Contains confidential or internal markers', redact: '[CONFIDENTIAL]' },
+      { keywords: ['financial', 'revenue', '$', 'routing number', 'account number'], score: 30, reason: 'Mentions financial metrics', redact: '[FINANCIAL_METRIC]' },
       { keywords: ['send', 'share', 'upload', 'join', 'connect'], score: 20, reason: 'Indicates potential data exfiltration or connection intent', redact: 'process' },
-      { keywords: ['gmail.com', 'external', 'drive.google.com', 'personal cloud', 'my personal'], score: 30, reason: 'Mentions external or personal systems', redact: '[EXTERNAL_ENTITY]' },
+      { keywords: ['gmail.com', 'external', 'drive.google.com', 'personal cloud', 'my personal', 'dropbox'], score: 30, reason: 'Mentions external or personal systems', redact: '[EXTERNAL_ENTITY]' },
     ];
 
     for (const rule of keywordRules) {
@@ -201,7 +247,7 @@ async function startServer() {
       }
     }
 
-    res.json({
+    const finalResult = {
       risk_score,
       risk_level,
       attack_type,
@@ -214,7 +260,13 @@ async function startServer() {
       report_summary,
       original_prompt: text,
       user
-    });
+    };
+
+    try {
+      await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [FALLBACK] USER: ${user} | ACTION: ${action} | SCORE: ${risk_score} | THREAT: ${attack_type} | PROMPT: ${text}\n`, 'utf8');
+    } catch(e) { console.error('Failed to write to audit log', e); }
+
+    res.json(finalResult);
   });
 
   // Vite middleware for development
