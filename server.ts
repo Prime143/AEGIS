@@ -151,11 +151,12 @@ async function startServer() {
     // 2. Contextual Keyword Heuristics
     const keywordRules = [
       { keywords: ['password', 'credentials', 'admin123', 'supersecret99'], score: 50, reason: 'Contains sensitive authentication terms', redact: '[REDACTED_CREDENTIALS]' },
-      { keywords: ['client data', 'prod-db'], score: 40, reason: 'Mentions client data or database access', redact: '[INTERNAL_SYSTEM]' },
+      { keywords: ['api key', 'secret key', 'access token', 'auth token'], score: 60, reason: 'Mentions API or access keys', redact: '[REDACTED_KEY_REFERENCE]' },
+      { keywords: ['company db', 'client data', 'prod-db', 'database', 'internal db'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
       { keywords: ['confidential', 'internal only', 'proprietary'], score: 40, reason: 'Contains confidential or internal markers', redact: '[CONFIDENTIAL]' },
       { keywords: ['financial', 'revenue', '$'], score: 30, reason: 'Mentions financial metrics', redact: '[FINANCIAL_METRIC]' },
-      { keywords: ['send', 'share', 'upload'], score: 10, reason: 'Indicates potential data exfiltration intent', redact: 'process' },
-      { keywords: ['gmail.com', 'external', 'drive.google.com'], score: 20, reason: 'Mentions external domains or entities', redact: '[EXTERNAL_DOMAIN]' },
+      { keywords: ['send', 'share', 'upload', 'join', 'connect'], score: 20, reason: 'Indicates potential data exfiltration or connection intent', redact: 'process' },
+      { keywords: ['gmail.com', 'external', 'drive.google.com', 'personal cloud', 'my personal'], score: 30, reason: 'Mentions external or personal systems', redact: '[EXTERNAL_ENTITY]' },
     ];
 
     for (const rule of keywordRules) {
