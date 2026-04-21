@@ -9,7 +9,7 @@
 ### 👨‍💻 About Me
 - 🛡️ **Primary Focus:** Building secure, user-centric web applications and AI Security Governance logic.
 - 🚀 **Currently Building:** **AEGIS** as a Solo Developer for the **Google Solution Challenge 2026**.
-- 🛠️ **Latest Prototype:** **AEGIS** — An enterprise-grade, multimodal AI Job Scam Shield.
+- 🛠️ **Latest Prototype:** **AEGIS** — An enterprise-grade AI Governance and Security Platform.
 - 🌱 **Always Learning:** Advanced GenAI integrations, deep-tech orchestration, and modern UX engineering.
 - 📫 **How to reach me:** *(Add your Email/LinkedIn here)*
 
