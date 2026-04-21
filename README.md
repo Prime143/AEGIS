@@ -6,11 +6,8 @@
 
 ---
 
-## 👥 Team Kaalnetra
-- **Vijay Ukande** (Team Lead)
-- **Sakshi Shimple**
-- **Darshan P**
-- **Rohan Dede**
+## 👤 Developer
+- **Vijay Ukande** (Solo Developer)
 
 ---
 
