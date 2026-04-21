@@ -34,17 +34,17 @@ async function startServer() {
         ${file ? '\n[NOTE: A document is attached to this prompt.]' : ''}
         
         Tasks:
-        1. Context & Agentic Threat Detection: Understand exactly what the employee is trying to achieve. Is the user intentionally trying to bypass DLP (e.g. asking to obfuscate/base64 encode client lists)? Are they asking to write backdoors or logic bombs into code? Are they digging for confidential manager/executive info or salary bands? These are INSIDER THREATS and MUST NOT pass.
-        2. Document Redaction: If a document is attached, extract its text. If it contains sensitive PII, credentials, API Keys, DB URIs, or financials, you MUST redact those parts (e.g., [REDACTED_API_KEY], [REDACTED_DB_URI]) and append the sanitized document text to the rewritten_prompt.
-        3. Score risk 0-100 based on severity AND the current POLICY MODE. (e.g., API Keys, Insider Threats, Exfiltration attempts are high risk, score > 80).
+        1. Context & Agentic Threat Detection: Understand exactly what the employee is trying to achieve. Are they attempting to dump data using real credentials (e.g., asking to pull data from a raw database URI like "postgres://...")? Are they trying to bypass DLP? These are HIGH RISK INSIDER THREATS and MUST NOT pass.
+        2. Threat Redaction: Redact sensitive PII (including partial SSNs like "ending in 4921"), credentials, API Keys, explicit Database URIs, and financials. You MUST redact those parts (e.g., [REDACTED_DB_URI], [REDACTED_SSN]) and substitute them in the rewritten_prompt.
+        3. Score risk 0-100 based on severity AND the current POLICY MODE. (e.g., Database URIs, explicit credentials, partial SSNs, or Insider Threats heavily increase risk, score > 80 if severe).
         4. Determine action based on score and POLICY MODE: 
            - ALLOW (0-20): Safe. General knowledge questions.
-           - MODIFIED (21-70): Text or document contains specific names/numbers/secrets that can be redacted. Rewrite the prompt and/or document text to redact sensitive data using generic placeholders (e.g., [REDACTED_CLIENT_NAME], [REDACTED_API_KEY]). ALWAYS wrap your redactions in exactly this format: [REDACTED_REASON].
-           - BLOCK (71-100): The core task relies on sensitive data that cannot be cleanly redacted, involves massive data leaks, or shows malicious INSIDER THREAT intent (sabotage, exfiltration, HR probe). MUST BLOCK IT.
+           - MODIFIED (21-70): Contains specific names/numbers/secrets that can be redacted. Rewrite the prompt to redact sensitive data using generic placeholders (e.g., [REDACTED_SSN], [REDACTED_API_KEY]).
+           - BLOCK (71-100): The core task relies on sensitive data that cannot be cleanly redacted, involves massive data leaks (like pulling from an internal database), or shows malicious intent. MUST BLOCK IT.
         5. Provide the rewritten_prompt if MODIFIED. If ALLOW, rewritten_prompt = original prompt + document text. If BLOCK, rewritten_prompt = "".
         6. Provide a suggested_safe_prompt: 
-           - If MODIFIED: A message explaining what was redacted (e.g., "API Key redacted") and why.
-           - If BLOCK: A firm message explaining that this task should NOT be done with external AI (e.g., "Company policy prohibits analyzing raw DB credentials or attempting to bypass security controls.").
+           - If MODIFIED: A message explaining what was redacted (e.g., "API Key redacted").
+           - If BLOCK: A firm message explaining why it was blocked.
         7. Set alert_status to TRIGGERED if BLOCK, else NOT TRIGGERED.
         `;
 
@@ -161,6 +161,12 @@ async function startServer() {
         redact: '[REDACTED_SSN]'
       },
       {
+        pattern: /(?:ssn|social security|social security number).*?\b\d{4}\b/gi,
+        score: 75,
+        reason: 'Detected partial SSN reference',
+        redact: '[REDACTED_PARTIAL_SSN]'
+      },
+      {
         pattern: /\b(?:\+?1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}\b/g,
         score: 50,
         reason: 'Detected North American Phone Number (PII)',
@@ -201,6 +207,7 @@ async function startServer() {
       { keywords: ['base64 encode client list', 'obfuscate data', 'hide this code', 'exfiltrate', 'bypass dlp', 'covert channel', 'encode database'], score: 90, reason: 'Detected data exfiltration / obfuscation attempt', redact: '[EXFILTRATION_BLOCKED]' },
       { keywords: ['password', 'credentials', 'admin123', 'supersecret99'], score: 50, reason: 'Contains sensitive authentication terms', redact: '[REDACTED_CREDENTIALS]' },
       { keywords: ['api key', 'secret key', 'access token', 'auth token'], score: 60, reason: 'Mentions API or access keys', redact: '[REDACTED_KEY_REFERENCE]' },
+      { keywords: ['postgres://', 'mongodb://', 'mysql://', 'redis://', 'postgresql://'], score: 95, reason: 'Detected Internal Database Connection URL', redact: '[REDACTED_DB_URI]' },
       { keywords: ['company db', 'client data', 'prod-db', 'database', 'internal db', 'customer list'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
       { keywords: ['confidential', 'internal only', 'proprietary', 'trade secret', 'do not share'], score: 40, reason: 'Contains confidential or internal markers', redact: '[CONFIDENTIAL]' },
       { keywords: ['financial', 'revenue', '$', 'routing number', 'account number'], score: 30, reason: 'Mentions financial metrics', redact: '[FINANCIAL_METRIC]' },
