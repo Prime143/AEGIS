@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Shield, ShieldAlert, ShieldCheck, Activity, Lock, Unlock, Send, Copy, AlertTriangle, User, Clock, CheckCircle, Edit3, XCircle, Terminal, Cpu, Database, ChevronRight, Users, FileText, Sliders, Paperclip, File as FileIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
