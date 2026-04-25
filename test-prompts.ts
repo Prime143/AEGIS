@@ -46,7 +46,10 @@ async function runTests() {
     try {
       const response = await fetch('http://localhost:3000/api/analyze', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+        },
         body: JSON.stringify({
           text: prompt,
           user: 'test-user',
