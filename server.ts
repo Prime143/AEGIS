@@ -271,6 +271,7 @@ async function startServer() {
       { keywords: ['sql injection', 'xss', 'cross-site scripting', 'path traversal', 'local file inclusion', '/etc/passwd', 'c:\\windows\\system32', 'os command injection', 'cve-', 'zero-day'], score: 95, reason: 'Detected Application Security Exploit request', redact: '[APPSEC_EXPLOIT_BLOCKED]' },
       { keywords: ['root access', 'sudoers', 'chmod 777', 'bypass uac', 'port scan', 'nmap -p', 'disable auth', 'strictssl: false'], score: 90, reason: 'Detected High-Risk Insider Threat (Privilege Escalation / Recon)', redact: '[INSIDER_THREAT_BLOCKED]' },
       { keywords: ['logic bomb', 'backdoor', 'bypass edr', 'disable antivirus', 'vpn bypass', 'shadow it', 'vulnerabilities in internal', 'disable proxy', 'reverse shell', 'exploit', 'vulnerability', 'vulnerabilities', 'malware', 'ransomware'], score: 90, reason: 'Detected potential sabotage or security control bypass intent', redact: '[MALICIOUS_INTENT_BLOCKED]' },
+      { keywords: ['ransom', 'extortion', 'blackmail', 'hostage', 'demand my money', 'until my money is paid', 'holding access', 'withhold access', 'resignation letter', 'bad work conditions', 'will leak', 'sell to competitor', 'keeping all', 'holding data'], score: 100, reason: 'Detected Insider Disgruntlement / Extortion / Data Hostage intent', redact: '[EXTORTION_INTENT_BLOCKED]' },
       { keywords: ['write a convincing email', 'reset their okta password', 'phishing', 'spear-phishing', 'click this link to reset'], score: 85, reason: 'Targeting Social Engineering or Phishing', redact: '[SOCIAL_ENGINEERING_BLOCKED]' },
       { keywords: ['patient record', 'diagnosis', 'medical history', 'dob', 'prescription', 'hipaa', 'national insurance number', 'iban', 'passport'], score: 75, reason: 'Detected highly sensitive Medical/International PII', redact: '[SENSITIVE_PII_BLOCKED]' },
       { keywords: ['ceo email', 'manager salary', 'salary band', 'termination list', 'performance review', 'disciplinary action', 'layoff list', 'manager info', 'executive summary leak'], score: 85, reason: 'Targeting sensitive Executive or HR data', redact: '[SENSITIVE_HR_DATA]' },
@@ -278,7 +279,7 @@ async function startServer() {
       { keywords: ['password', 'credentials', 'admin123', 'supersecret99'], score: 50, reason: 'Contains sensitive authentication terms', redact: '[REDACTED_CREDENTIALS]' },
       { keywords: ['api key', 'secret key', 'access token', 'auth token'], score: 60, reason: 'Mentions API or access keys', redact: '[REDACTED_KEY_REFERENCE]' },
       { keywords: ['postgres://', 'mongodb://', 'mysql://', 'redis://', 'postgresql://'], score: 95, reason: 'Detected Internal Database Connection URL', redact: '[REDACTED_DB_URI]' },
-      { keywords: ['company db', 'client data', 'prod-db', 'database', 'internal db', 'customer list', 'clients db', 'company clients db'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
+      { keywords: ['company db', 'client data', 'client db', 'prod-db', 'database', 'internal db', 'customer list', 'clients db', 'company clients db'], score: 40, reason: 'Mentions internal database or client data', redact: '[INTERNAL_SYSTEM]' },
       { keywords: ['confidential', 'internal only', 'proprietary', 'trade secret', 'do not share'], score: 40, reason: 'Contains confidential or internal markers', redact: '[CONFIDENTIAL]' },
       { keywords: ['financial', 'revenue', '$', 'routing number', 'account number'], score: 30, reason: 'Mentions financial metrics', redact: '[FINANCIAL_METRIC]' },
       { keywords: ['send', 'share', 'upload', 'join', 'connect'], score: 20, reason: 'Indicates potential data exfiltration or connection intent', redact: 'process' },
@@ -307,7 +308,18 @@ async function startServer() {
     let report_summary = 'Routine AI interaction.';
     let suggested_safe_prompt = 'Your prompt is safe.';
 
-    if (risk_score >= 71) {
+    let blockThreshold = 71;
+    let modifyThreshold = 21;
+    
+    if (policyMode === 'strict') {
+      blockThreshold = 40;
+      modifyThreshold = 10;
+    } else if (policyMode === 'relaxed') {
+      blockThreshold = 95;
+      modifyThreshold = 40;
+    }
+
+    if (risk_score >= blockThreshold) {
       risk_level = 'High';
       action = 'BLOCK';
       attack_type = 'Data Leakage / High Risk';
@@ -316,7 +328,7 @@ async function startServer() {
       alert_status = 'TRIGGERED';
       report_summary = `Blocked high-risk prompt containing: ${reasons.join(', ')}`;
       suggested_safe_prompt = 'Please remove all sensitive data, credentials, and internal identifiers before submitting.';
-    } else if (risk_score >= 21) {
+    } else if (risk_score >= modifyThreshold) {
       risk_level = 'Medium';
       action = 'MODIFIED';
       attack_type = 'Suspicious / Policy Violation';
