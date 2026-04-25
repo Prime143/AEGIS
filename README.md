@@ -62,7 +62,7 @@ Your submission specifically targets:
    - Copy `.env.example` to `.env.local` (or `.env`).
    - Add your Google Gemini API Key inside the file:
      ```env
-     GEMINI_API_KEY="your_actual_gemini_api_key_here"
+     GEMINI_API_KEY="your_api_key_here"
      ```
 
 4. **Run the Application:**

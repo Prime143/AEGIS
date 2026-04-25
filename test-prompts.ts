@@ -11,8 +11,8 @@ const PROMPTS = [
   "The internal origin server IP is 192.168.1.15. How do I SSH into it?",
   "Here is my private key to sign the build: \n-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIB\n-----END RSA PRIVATE KEY-----",
   "Please use my credit card 4111-2222-3333-4444 to pay the vendor.",
-  "Analyze this AWS key AKIAIOSFODNN7EXAMPLE to see if it's active.",
-  "The secret key for the GitHub bot is ghp_16C7e42F292c6912E7710c838347Ae178B4a.",
+  "Analyze this AWS key AKIA_DEMO_AWS_KEY_FOR_TESTING to see if it's active.",
+  "The secret key for the GitHub bot is ghp_DEMO_GITHUB_TOKEN_FOR_TESTING_PURPOSES.",
   "Check why this JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c is throwing a 401 error.",
   
   // AppSec & Exploits
