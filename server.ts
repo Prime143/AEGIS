@@ -115,8 +115,9 @@ async function startServer() {
         if (response.text) {
           const result = JSON.parse(response.text);
           try {
-            const safePromptLog = result.action === 'BLOCK' ? '[BLOCKED - PROMPT DELETED TO PREVENT LEAK]' : (result.rewritten_prompt || '[REDACTED]');
-            await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [GEMINI] USER: ${user} | ACTION: ${result.action} | SCORE: ${result.risk_score} | PROMPT: ${safePromptLog}\n`, 'utf8');
+            const safePromptLog = (result.action === 'BLOCK' ? '[BLOCKED - PROMPT DELETED TO PREVENT LEAK]' : (result.rewritten_prompt || '[REDACTED]')).replace(/\n|\r/g, '\\n');
+            const sanitizedUser = String(user).replace(/\n|\r/g, '');
+            await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [GEMINI] USER: ${sanitizedUser} | ACTION: ${result.action} | SCORE: ${result.risk_score} | PROMPT: ${safePromptLog}\n`, 'utf8');
           } catch(e) { console.error(e); }
           return res.json({ ...result, original_prompt: text, user });
         }
@@ -177,9 +178,9 @@ async function startServer() {
         redact: '[REDACTED_API_KEY]' 
       },
       {
-        pattern: /(?:<script>|<\/script>|javascript:|onerror=|onload=|' OR 1=1|UNION SELECT|DROP TABLE|--\s*$|; rm -rf|\.\.\/\.\.\/)/gi,
-        score: 95,
-        reason: 'Detected common Application Security Exploit Payload (XSS, SQLi, LFI, RCE)',
+        pattern: /(?:<script>|<\/script>|<img[^>]+onerror=|javascript:|onload=|eval\(|alert\(|document\.cookie|document\.domain|window\.location|' OR '1'='1|' OR 1=1|" OR "1"="1|UNION SELECT|DROP TABLE|INSERT INTO|DELETE FROM|UPDATE .* SET|EXEC xp_cmdshell|WAITFOR DELAY|--\s*$|;--|; rm -rf|\.\.\/\.\.\/|\/etc\/passwd|c:\\windows\\system32|bash -i|nc -e)/gi,
+        score: 100,
+        reason: 'Detected Critical Application Security Exploit Payload (XSS, SQLi, LFI, RCE)',
         redact: '[EXPLOIT_PAYLOAD_BLOCKED]'
       },
       { 
@@ -357,8 +358,9 @@ async function startServer() {
     };
 
     try {
-      const safePromptLog = action === 'BLOCK' ? '[BLOCKED - PROMPT DELETED TO PREVENT LEAK]' : (rewritten_prompt || '[REDACTED]');
-      await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [FALLBACK] USER: ${user} | ACTION: ${action} | SCORE: ${risk_score} | THREAT: ${attack_type} | PROMPT: ${safePromptLog}\n`, 'utf8');
+      const safePromptLog = (action === 'BLOCK' ? '[BLOCKED - PROMPT DELETED TO PREVENT LEAK]' : (rewritten_prompt || '[REDACTED]')).replace(/\n|\r/g, '\\n');
+      const sanitizedUser = String(user).replace(/\n|\r/g, '');
+      await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [FALLBACK] USER: ${sanitizedUser} | ACTION: ${action} | SCORE: ${risk_score} | THREAT: ${attack_type} | PROMPT: ${safePromptLog}\n`, 'utf8');
     } catch(e) { console.error('Failed to write to audit log', e); }
 
     res.json(finalResult);
