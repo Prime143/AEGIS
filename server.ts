@@ -1,5 +1,6 @@
 import express from 'express';
 import helmet from 'helmet';
+import cors from 'cors';
 import fs from 'fs/promises';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
@@ -16,6 +17,7 @@ async function startServer() {
   app.use(helmet({
     contentSecurityPolicy: false, // Vite requires inline scripts during dev
   }));
+  app.use(cors({ origin: process.env.APP_URL || 'http://localhost:3000' }));
   app.use(express.json({ limit: '5mb' }));
 
   // Basic In-Memory Rate Limiter to prevent DoS & API Billing Exhaustion
@@ -24,6 +26,12 @@ async function startServer() {
   const MAX_REQUESTS = 30; // 30 requests per minute
 
   app.use('/api/', (req, res, next) => {
+    // Mock Authentication Middleware
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== 'Bearer AEGIS_SECURE_TOKEN_2026') {
+      return res.status(401).json({ error: 'Unauthorized: Invalid or Missing API Token' });
+    }
+
     const ip = req.ip || req.headers['x-forwarded-for'] as string || req.socket.remoteAddress || '127.0.0.1';
     const now = Date.now();
     
@@ -122,7 +130,7 @@ async function startServer() {
           try {
             const safePromptLog = (result.action === 'BLOCK' ? '[BLOCKED - PROMPT DELETED TO PREVENT LEAK]' : (result.rewritten_prompt || '[REDACTED]')).replace(/\n|\r/g, '\\n');
             const sanitizedUser = String(user).replace(/\n|\r/g, '');
-            await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [GEMINI] USER: ${sanitizedUser} | ACTION: ${result.action} | SCORE: ${result.risk_score} | PROMPT: ${safePromptLog}\n`, 'utf8');
+            await fs.appendFile('aegis-audit.log', `[${new Date().toISOString()}] [GEMINI] USER: ${sanitizedUser} | ACTION: ${result.action} | SCORE: ${result.risk_score} | THREAT: ${result.attack_type || 'Unknown'} | PROMPT: ${safePromptLog}\n`, 'utf8');
           } catch(e) { console.error(e); }
           return res.json({ ...result, original_prompt: text, user });
         }
@@ -369,6 +377,48 @@ async function startServer() {
     } catch(e) { console.error('Failed to write to audit log', e); }
 
     res.json(finalResult);
+  });
+
+  // Enterprise Endpoint: Load persistent audit logs
+  app.get('/api/logs', async (req, res) => {
+    try {
+      let logContent = '';
+      try {
+        logContent = await fs.readFile('aegis-audit.log', 'utf8');
+      } catch (e) {
+        return res.json([]); // File not found, no logs yet
+      }
+      
+      const lines = logContent.split('\n').filter(line => line.trim() !== '');
+      
+      const parsedLogs = lines.map((line, index) => {
+        const match = line.match(/^\[(.*?)\] \[(.*?)\] USER: (.*?) \| ACTION: (.*?) \| SCORE: (.*?) \| (?:THREAT: (.*?) \| )?PROMPT: (.*)$/);
+        if (match) {
+           return {
+             id: 'hist-' + index,
+             timestamp: match[1],
+             engine: match[2],
+             user: match[3],
+             action: match[4],
+             risk_score: parseInt(match[5]),
+             attack_type: match[6] || 'Unknown',
+             rewritten_prompt: match[7],
+             risk_level: parseInt(match[5]) >= 71 ? 'High' : parseInt(match[5]) >= 21 ? 'Medium' : 'Low',
+             reasons: [match[6] || 'Processed'],
+             suggested_safe_prompt: match[7],
+             business_impact: 'Historical Log Entry',
+             alert_status: match[4] === 'BLOCK' ? 'TRIGGERED' : 'NOT TRIGGERED',
+             report_summary: 'Loaded from persistent storage'
+           };
+        }
+        return null;
+      }).filter(log => log !== null).reverse(); // Reverse to get newest first
+
+      res.json(parsedLogs);
+    } catch (e) {
+      console.error('Error reading log file', e);
+      res.json([]);
+    }
   });
 
   // Vite middleware for development

@@ -49,6 +49,42 @@ export default function App() {
   const [userProfiles, setUserProfiles] = useState<Record<string, UserProfile>>({});
   const trafficIndex = useRef(0);
 
+  // Fetch initial audit logs
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await fetch('/api/logs', {
+          headers: { 'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026' }
+        });
+        if (response.ok) {
+          const historicalLogs = await response.json();
+          if (historicalLogs.length > 0) {
+            setEvents(historicalLogs);
+            
+            // Rebuild user profiles from history
+            const profiles: Record<string, UserProfile> = {};
+            historicalLogs.slice().reverse().forEach((log: any) => {
+              const profile = profiles[log.user] || { email: log.user, totalInteractions: 0, violations: 0, riskScore: 0, status: 'Trusted' };
+              profile.totalInteractions += 1;
+              if (log.action !== 'ALLOW') profile.violations += 1;
+              profile.riskScore = Math.round(((profile.riskScore * (profile.totalInteractions - 1)) + log.risk_score) / profile.totalInteractions);
+              
+              if (profile.riskScore >= 50 || profile.violations >= 3) profile.status = 'Restricted';
+              else if (profile.riskScore >= 20 || profile.violations >= 1) profile.status = 'Monitored';
+              else profile.status = 'Trusted';
+              
+              profiles[log.user] = profile;
+            });
+            setUserProfiles(profiles);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load logs', e);
+      }
+    };
+    fetchLogs();
+  }, []);
+
   // Modal State
   const [showOverrideModal, setShowOverrideModal] = useState(false);
   const [overrideReason, setOverrideReason] = useState('');
@@ -98,7 +134,8 @@ export default function App() {
       analyzeTraffic(traffic.text, traffic.user, true);
     }, 8000);
 
-    if (events.length === 0) {
+    // We omit the initial mock traffic burst if events exist so it doesn't duplicate
+    if (events.length === 0 && trafficIndex.current === 0) {
       analyzeTraffic(MOCK_TRAFFIC[0].text, MOCK_TRAFFIC[0].user, true);
       trafficIndex.current += 1;
     }
@@ -110,7 +147,10 @@ export default function App() {
     try {
       const response = await fetch('/api/analyze', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+        },
         body: JSON.stringify({ text, user, policyMode, file: fileData }),
       });
       
