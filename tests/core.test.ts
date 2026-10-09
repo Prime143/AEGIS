@@ -284,4 +284,32 @@ test('AEGIS Core Security Test Suite', async (t) => {
     assert.strictEqual(audit.requestHash.length, 64); // SHA-256 hash length
     assert.ok(audit.userId.startsWith('usr-'));
   });
+
+  await t.test('15. Precision: Legitimate prompts are ALLOWED and not falsely blocked', async () => {
+    const legitimatePrompts = [
+      'The key is to write clean, modular, and maintainable code.',
+      'How do I write an INSERT INTO query in PostgreSQL?',
+      'What are best practices for DELETE FROM queries without locking tables?',
+      'How can I configure my Docker container to avoid requiring root access?',
+      'Draft an email to the CEO celebrating our team quarterly release.'
+    ];
+
+    for (const prompt of legitimatePrompts) {
+      const response = await pipeline.processInteraction({
+        prompt,
+        userEmail: 'engineer@nexus-corp.com',
+        userRole: 'USER',
+        hasUserConsent: true,
+        context: orgService.getContext()
+      });
+
+      assert.strictEqual(response.decision, 'ALLOW', `Failed on prompt: ${prompt}`);
+      assert.strictEqual(response.success, true);
+      assert.ok(!response.responseContent.includes('[REQUEST BLOCKED]'));
+      assert.ok(!response.responseContent.includes('[SECURITY INTERCEPTION]'));
+      if (response.responseInspection) {
+        assert.strictEqual(response.responseInspection.decision, 'ALLOW');
+      }
+    }
+  });
 });

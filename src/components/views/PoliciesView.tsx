@@ -65,43 +65,49 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 font-sans">
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
         <div>
-          <h2 className="text-base font-bold text-slate-100 font-mono flex items-center space-x-2">
+          <h2 className="text-base font-bold text-slate-100 flex items-center space-x-2">
             <Sliders className="w-4 h-4 text-cyan-400" />
-            <span>CENTRALIZED POLICY GOVERNANCE ENGINE</span>
+            <span>
+              {userRole === 'USER' ? 'Acceptable Use & Security Policies' : 'Centralized Policy Governance Engine'}
+            </span>
           </h2>
-          <p className="text-xs text-slate-400 font-mono mt-0.5">
-            Deterministic rule definitions evaluated against employee prompts and AI provider responses.
+          <p className="text-xs text-slate-400 mt-0.5">
+            {userRole === 'USER'
+              ? 'Active security rules governing AI interactions across the organization. Requests violating these rules are sanitized or blocked.'
+              : 'Deterministic rule definitions evaluated against employee prompts and AI provider responses.'}
           </p>
         </div>
 
         {userRole === 'ADMIN' ? (
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs font-mono shadow-[0_0_10px_rgba(6,182,212,0.25)] transition-all cursor-pointer"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs shadow-sm transition-all cursor-pointer shrink-0"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>CREATE POLICY</span>
           </button>
         ) : (
-          <div className="text-[11px] font-mono text-slate-500 italic">
-            Read-only mode (Admin role required to modify policies)
+          <div className="text-xs text-slate-400 bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-lg">
+            Read-only mode ({userRole === 'SECURITY_ANALYST' ? 'Security Analyst' : 'Employee'})
           </div>
         )}
       </div>
 
       {/* DLP Shield Policy Controls */}
       {dlpPolicy && onUpdateDlpPolicy && (
-        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3 font-mono text-xs">
+        <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3 text-xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <ShieldCheck className="w-4 h-4 text-cyan-400" />
-              <span className="font-bold text-slate-100 text-xs tracking-wide">DLP SHIELD MODULAR INTERCEPTION CONTROLS</span>
+              <span className="font-bold text-slate-100 text-xs tracking-wide">Data Loss Prevention (DLP) Categories</span>
             </div>
-            <span className="text-[10px] text-slate-500">Real-time gateway enforcement toggles</span>
+            <span className="text-[11px] text-slate-400">
+              {userRole === 'ADMIN' ? 'Real-time gateway enforcement toggles' : 'Active gateway protection status'}
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
@@ -171,7 +177,7 @@ export const PoliciesView: React.FC<PoliciesViewProps> = ({
 
       {/* Policies Table */}
       <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-        <div className="overflow-x-auto font-mono text-xs">
+        <div className="overflow-x-auto text-xs">
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-slate-800 text-[11px] text-slate-400">

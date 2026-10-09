@@ -41,6 +41,22 @@ export class SafeMockProvider implements AIProvider {
 3. Virtualize long lists with windowing libraries (e.g. react-window or tanstack-virtual).
 4. Code-split routes and heavy components using React.lazy() and Suspense.
 5. Avoid anonymous objects or functions declared in JSX render bodies.`;
+    } else if (lower.includes('python') || lower.includes('decorator')) {
+      responseText = `In Python, decorators are callables that accept a function and return an augmented wrapper function:
+
+\`\`\`python
+def audit_logging(func):
+    def wrapper(*args, **kwargs):
+        print(f"Executing: {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@audit_logging
+def fetch_records():
+    return {"status": "ok"}
+\`\`\`
+
+Common patterns include functools.wraps to preserve function metadata and parameterized decorators for custom config.`;
     } else if (lower.includes('email') || lower.includes('welcome') || lower.includes('formal letter')) {
       responseText = `Subject: Welcome to the Team - Onboarding & Resources
 
@@ -60,10 +76,15 @@ The provided text contains structured operational requests. The request structur
 3. Use parameterized queries or prepared statements to prevent injection and enable query plan caching.
 4. Inspect execution plans (EXPLAIN ANALYZE) to identify table scans.`;
     } else {
-      responseText = `I have received your sanitized request through the AEGIS Security Gateway:
-"${prompt.length > 80 ? prompt.substring(0, 80) + '...' : prompt}"
+      responseText = `Analysis and Guidance:
 
-The request was safely processed. As an AI assistant governed by enterprise security policy, I am ready to assist with further tasks within corporate compliance boundaries.`;
+Your query has been safely processed through the AEGIS Security Gateway. Here is the operational assessment:
+
+1. Requirements Clarification: Ensure core constraints and boundary conditions are explicitly defined.
+2. Implementation Recommendations: Follow standard enterprise coding standards, modular architecture, and deterministic unit testing.
+3. Security & Compliance: Ensure telemetry, credentials, and customer data remain protected within compliance boundaries.
+
+If you have additional specific technical requirements or prompts to evaluate, please enter them in the prompt console.`;
     }
 
     const latencyMs = Math.round(performance.now() - start + 12);

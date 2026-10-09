@@ -272,7 +272,7 @@ export class GatewayPipeline {
     let finalResponseContent = providerOutput;
 
     if (providerOutput && !providerOutput.startsWith('[AI PROVIDER UNAVAILABLE]')) {
-      responseInspection = await this.responseInspector.inspect(providerOutput, request.context);
+      responseInspection = await this.responseInspector.inspect(providerOutput, request.context, provider.id);
       finalResponseContent = responseInspection.outputContent;
     }
 

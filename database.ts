@@ -199,17 +199,7 @@ async function saveToDisk(): Promise<void> {
   
   writeQueue = writeQueue.then(async () => {
     try {
-      await fs.writeFile(TEMP_PATH, dataString, 'utf8');
-      try {
-        await fs.rename(TEMP_PATH, DB_PATH);
-      } catch (renameErr: any) {
-        if (renameErr.code === 'EPERM' || renameErr.code === 'EBUSY') {
-          await fs.copyFile(TEMP_PATH, DB_PATH);
-          await fs.unlink(TEMP_PATH).catch(() => {});
-        } else {
-          throw renameErr;
-        }
-      }
+      await fs.writeFile(DB_PATH, dataString, 'utf8');
     } catch (err) {
       console.error('Database write error:', err);
     }
@@ -269,6 +259,83 @@ export async function initDatabase(): Promise<DatabaseSchema> {
     if (dbCache.logs && dbCache.logs.length > 0) {
       const sanitized = sanitizeExistingLogs(dbCache.logs);
       dbCache.logs = sanitized;
+      modified = true;
+    }
+
+    // Seed realistic sample interactions for demo employee if missing
+    if (!dbCache.logs || !dbCache.logs.some(l => l.user === 'current.user@nexus-corp.com')) {
+      const demoUserSeeds: LogEvent[] = [
+        {
+          id: `aegis-evt-${Date.now()}-u1`,
+          timestamp: new Date(Date.now() - 3600000).toISOString(),
+          user: 'current.user@nexus-corp.com',
+          user_role: 'USER',
+          prompt_hash: crypto.createHash('sha256').update('How to optimize React performance with memoization?').digest('hex'),
+          original_prompt: 'How to optimize React performance with memoization?',
+          sanitized_prompt: 'How to optimize React performance with memoization?',
+          risk_score: 0,
+          risk_level: 'LOW',
+          attack_type: 'None',
+          reasons: [],
+          action: 'ALLOW',
+          rewritten_prompt: 'How to optimize React performance with memoization?',
+          suggested_safe_prompt: 'Prompt verified and approved for transmission.',
+          business_impact: 'Safe compliant interaction.',
+          alert_status: 'NOT TRIGGERED',
+          report_summary: 'Prompt verified and approved for transmission.',
+          provider_id: 'provider-safe-mock',
+          latency_ms: 18,
+          has_file: false,
+          override_status: 'NONE'
+        },
+        {
+          id: `aegis-evt-${Date.now()}-u2`,
+          timestamp: new Date(Date.now() - 1800000).toISOString(),
+          user: 'current.user@nexus-corp.com',
+          user_role: 'USER',
+          prompt_hash: crypto.createHash('sha256').update('Draft an introductory email for client whose email is client.john@external.com and phone is +1 800-555-0199').digest('hex'),
+          original_prompt: 'Draft an introductory email for client whose email is [REDACTED_EMAIL] and phone is [REDACTED_PHONE]',
+          sanitized_prompt: 'Draft an introductory email for client whose email is [REDACTED_EMAIL] and phone is [REDACTED_PHONE]',
+          risk_score: 45,
+          risk_level: 'MEDIUM',
+          attack_type: 'PII',
+          reasons: ['Detected personal or corporate email address.', 'Detected telephone contact number.'],
+          action: 'MODIFIED',
+          rewritten_prompt: 'Draft an introductory email for client whose email is [REDACTED_EMAIL] and phone is [REDACTED_PHONE]',
+          suggested_safe_prompt: 'Request sanitized before forwarding: Redacted PII entities.',
+          business_impact: 'Privacy compliance requirement: PII masked before external forwarding.',
+          alert_status: 'NOT TRIGGERED',
+          report_summary: 'PII masked in accordance with GDPR / DPDP.',
+          provider_id: 'provider-safe-mock',
+          latency_ms: 22,
+          has_file: false,
+          override_status: 'NONE'
+        },
+        {
+          id: `aegis-evt-${Date.now()}-u3`,
+          timestamp: new Date(Date.now() - 900000).toISOString(),
+          user: 'current.user@nexus-corp.com',
+          user_role: 'USER',
+          prompt_hash: crypto.createHash('sha256').update('Verify if AWS key AKIAIOSFODNN7EXAMPLE is active in IAM').digest('hex'),
+          original_prompt: '[REDACTED_BLOCKED_CONTENT]',
+          sanitized_prompt: '[PAYLOAD_BLOCKED_BY_PERIMETER_GATEWAY]',
+          risk_score: 98,
+          risk_level: 'CRITICAL',
+          attack_type: 'CREDENTIAL',
+          reasons: ['Detected explicit third-party API key, access token, or incoming webhook.'],
+          action: 'BLOCK',
+          rewritten_prompt: '',
+          suggested_safe_prompt: 'Request blocked by security policy: Strict prohibition against forwarding cryptographic keys.',
+          business_impact: 'Critical security perimeter block.',
+          alert_status: 'TRIGGERED',
+          report_summary: 'Request blocked by security policy: Block Credentials & Private Keys.',
+          provider_id: 'provider-safe-mock',
+          latency_ms: 2,
+          has_file: false,
+          override_status: 'NONE'
+        }
+      ];
+      dbCache.logs = [...demoUserSeeds, ...(dbCache.logs || [])];
       modified = true;
     }
 

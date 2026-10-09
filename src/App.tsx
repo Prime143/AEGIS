@@ -57,9 +57,16 @@ export default function App() {
   });
 
   // Synchronize state with gateway backend
-  const fetchGatewayState = async () => {
+  const fetchGatewayState = async (tokenOverride?: string, emailOverride?: string, roleOverride?: UserRole) => {
+    const effectiveToken = tokenOverride || authToken;
+    const effectiveEmail = emailOverride || userEmail;
+    const effectiveRole = roleOverride || currentRole;
+
     try {
-      const headers = getHeaders();
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${effectiveToken}`
+      };
 
       // 1. Settings
       const settingsRes = await fetch('/api/settings', { headers });
@@ -110,23 +117,25 @@ export default function App() {
       }
 
       // 7. Developer API Keys (Admin only)
-      if (currentRole === 'ADMIN') {
+      if (effectiveRole === 'ADMIN') {
         const keysRes = await fetch('/api/keys', { headers });
         if (keysRes.ok) {
           const kData = await keysRes.json();
           setApiKeys(kData);
         }
+      } else {
+        setApiKeys([]);
       }
 
       // 8. User Consent Verification
-      const conRes = await fetch(`/api/consent/${encodeURIComponent(userEmail)}`, { headers });
+      const conRes = await fetch(`/api/consent/${encodeURIComponent(effectiveEmail)}`, { headers });
       if (conRes.ok) {
         const cData = await conRes.json();
         setHasUserConsent(!!cData.consented);
       }
 
       // 9. Security Events / Logs (Protected RBAC)
-      if (currentRole !== 'USER') {
+      if (effectiveRole !== 'USER') {
         const logsRes = await fetch('/api/logs', { headers });
         if (logsRes.ok) {
           const lData = await logsRes.json();
@@ -134,7 +143,7 @@ export default function App() {
         }
       } else {
         // Safe DSAR export for standard user role
-        const dsarRes = await fetch(`/api/dsar/export?email=${encodeURIComponent(userEmail)}`, { headers });
+        const dsarRes = await fetch(`/api/dsar/export?email=${encodeURIComponent(effectiveEmail)}`, { headers });
         if (dsarRes.ok) {
           const dData = await dsarRes.json();
           setEvents(dData.interactions || []);
@@ -147,7 +156,7 @@ export default function App() {
 
   useEffect(() => {
     fetchGatewayState();
-    const interval = setInterval(fetchGatewayState, 12000);
+    const interval = setInterval(() => fetchGatewayState(), 12000);
     return () => clearInterval(interval);
   }, [authToken, userEmail, currentRole]);
 
@@ -160,6 +169,16 @@ export default function App() {
       'current.user@nexus-corp.com';
     setUserEmail(targetEmail);
 
+    // Adjust activeTab logically to match role workspace permissions
+    const userAllowedTabs = ['console', 'events', 'policies'];
+    const analystAllowedTabs = ['dashboard', 'console', 'events', 'policies', 'detectors', 'providers', 'experiments', 'health'];
+
+    if (newRole === 'USER' && !userAllowedTabs.includes(activeTab)) {
+      setActiveTab('console');
+    } else if (newRole === 'SECURITY_ANALYST' && !analystAllowedTabs.includes(activeTab)) {
+      setActiveTab('dashboard');
+    }
+
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -170,6 +189,7 @@ export default function App() {
         const data = await res.json();
         setAuthToken(data.token);
         showNotification(`Switched role to ${newRole} (${targetEmail})`);
+        await fetchGatewayState(data.token, targetEmail, newRole);
       }
     } catch (e) {
       console.error('Role authentication failed:', e);

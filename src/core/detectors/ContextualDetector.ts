@@ -36,7 +36,9 @@ export class ContextualDetector implements Detector {
         'ignore all safety',
         'do anything now',
         'dan mode',
-        'jailbreak',
+        'jailbreak prompt',
+        'jailbreak this ai',
+        'enable jailbreak',
         'disregard corporate policies',
         'system prompt override'
       ],
@@ -50,9 +52,16 @@ export class ContextualDetector implements Detector {
       recommendedAction: 'BLOCK',
       policyClass: 'POL-INSIDER-001',
       keywords: [
-        'logic bomb',
-        'backdoor',
+        'plant a backdoor',
+        'install a backdoor',
+        'create a backdoor',
+        'insert a backdoor',
+        'plant a logic bomb',
+        'trigger a logic bomb',
+        'insert a logic bomb',
         'deletes all corporate dbs',
+        'deletes all corporate db',
+        'delete all corporate dbs',
         'deletes prod db',
         'destroy database',
         'wipe disk',
@@ -89,7 +98,9 @@ export class ContextualDetector implements Detector {
       recommendedAction: 'BLOCK',
       policyClass: 'POL-EXPLOIT-005',
       keywords: [
-        'root access',
+        'gain root access',
+        'escalate to root',
+        'exploit root access',
         'bypass uac',
         'modify sudoers',
         'privilege escalation script',
@@ -110,8 +121,6 @@ export class ContextualDetector implements Detector {
         'bypass dlp',
         'covert channel',
         'dns tunneling',
-        'shadow it',
-        'vpn bypass',
         'shadow it with a vpn bypass',
         'exfiltrate undetected',
         'hide traffic from soc'
@@ -126,12 +135,13 @@ export class ContextualDetector implements Detector {
       recommendedAction: 'BLOCK',
       policyClass: 'POL-HR-001',
       keywords: [
-        'ceo email',
-        'manager salary',
-        'salary band',
-        'salary bands',
-        'layoff list',
-        'termination list'
+        'leak ceo email',
+        'ceo private email',
+        'manager salary database',
+        'confidential salary band',
+        'confidential salary bands',
+        'internal layoff list',
+        'confidential termination list'
       ],
       explanation: 'Detected unauthorized query targeting sensitive executive identifiers or confidential salary bands.'
     }
@@ -165,8 +175,13 @@ export class ContextualDetector implements Detector {
 
     for (const rule of this.rules) {
       for (const kw of rule.keywords) {
-        const index = normalized.indexOf(kw);
-        if (index !== -1) {
+        const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const kwRegex = new RegExp(`(?:^|\\b)${escaped}(?:\\b|$)`, 'i');
+        const match = kwRegex.exec(normalized);
+        if (match) {
+          // Adjust match index if leading boundary was a space
+          const leadingOffset = match[0].startsWith(' ') || match[0].startsWith('\t') || match[0].startsWith('\n') ? 1 : 0;
+          const index = match.index + leadingOffset;
           findings.push({
             id: `${rule.id}-${index}`,
             category: rule.category,
@@ -181,7 +196,7 @@ export class ContextualDetector implements Detector {
             },
             policyClass: rule.policyClass,
             recommendedAction: rule.recommendedAction,
-            explanation: `${rule.explanation} Matched keyword phrase: "${kw}".`
+            explanation: `${rule.explanation} Matched phrase: "${kw}".`
           });
           break; // Avoid duplicate findings for same rule
         }

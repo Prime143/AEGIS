@@ -86,7 +86,7 @@ export class RegexDetector implements Detector {
     {
       id: 'reg-cleartext-secret',
       name: 'Cleartext Secret Assignment',
-      regex: /(?:password|passwd|pwd|secret_key|api[_\-]?key|auth[_\-]?token|access[_\-]?token|the\s+key|key)(?:\s+(?:is|are)\s*[-:=]?\s*|\s*[-:=]\s*)['"]?([a-zA-Z0-9!@#$%^&*()_\-+=\[\]{}]{6,})['"]?/gi,
+      regex: /(?:\b(?:api[_\-]?key|auth[_\-]?token|access[_\-]?token|secret[_\-]?key|client[_\-]?secret|db_pass(?:word)?|master_pass(?:word)?)\s*(?:=|:=|:|\bis\b)\s*['"]?([a-zA-Z0-9!@#$%^&*()_\-+=\[\]{}]{8,})['"]?|\b(?:password|passwd|pwd)\s*(?:=|:=|:|\bis\b)\s*['"]?([a-zA-Z0-9!@#$%^&*()_\-+=\[\]{}]{8,})['"]?)/gi,
       category: 'CREDENTIAL',
       severity: 'CRITICAL',
       confidence: 0.88,
@@ -174,7 +174,7 @@ export class RegexDetector implements Detector {
     {
       id: 'reg-appsec-sqli',
       name: 'SQL Injection Payload Pattern',
-      regex: /(?:\bUNION\s+SELECT\b|'\s+OR\s+'1'='1|"\s+OR\s+"1"="1|'\s+OR\s+1=1|\bDROP\s+TABLE\b|\bINSERT\s+INTO\b|\bDELETE\s+FROM\b|\bWAITFOR\s+DELAY\b|;\s*--|--\s*$|\bEXEC\s+xp_cmdshell\b)/gi,
+      regex: /(?:\bUNION\s+(?:ALL\s+)?SELECT\b|['"]\s*OR\s*['"]?[10]['"]?\s*=\s*['"]?[10]['"]?|['"]\s*OR\s*1\s*=\s*1\b|;\s*(?:DROP\s+TABLE|DELETE\s+FROM|INSERT\s+INTO|UPDATE\s+\w+\s+SET|SHUTDOWN)\b|\bWAITFOR\s+DELAY\s+['"]\d+:\d+:\d+['"]|['"]\s*;\s*--|;\s*--\s*(?:[a-zA-Z0-9]|$)|--\s*(?:[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+)|\bEXEC(?:\s+|UTE\s+)(?:master\.\.)?xp_cmdshell\b)/gi,
       category: 'APPSEC_EXPLOIT',
       severity: 'CRITICAL',
       confidence: 0.95,

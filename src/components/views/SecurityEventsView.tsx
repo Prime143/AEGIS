@@ -63,16 +63,51 @@ export const SecurityEventsView: React.FC<SecurityEventsViewProps> = ({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 font-sans">
+      {/* Role-Aware View Header */}
+      <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h2 className="text-base font-bold text-slate-100 flex items-center space-x-2">
+            {userRole === 'USER' ? (
+              <>
+                <Eye className="w-4 h-4 text-cyan-400" />
+                <span>My Prompt Activity &amp; DSAR Audit Log</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                <span>Security Event Audit &amp; Investigation Log</span>
+              </>
+            )}
+          </h2>
+          <p className="text-xs text-slate-400 mt-0.5">
+            {userRole === 'USER'
+              ? 'Your AI prompt interactions processed through the enterprise gateway, showing data privacy redactions and compliance status.'
+              : 'Perimeter boundary telemetry, risk classifications, entity detection findings, and SOC remediation history.'}
+          </p>
+        </div>
+
+        {onExportEvents && (
+          <button
+            onClick={onExportEvents}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors cursor-pointer shrink-0"
+            title={userRole === 'USER' ? 'Download personal DSAR interaction records' : 'Export full security audit event log'}
+          >
+            <Download className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{userRole === 'USER' ? 'Export My Records (DSAR)' : 'Export Audit Log'}</span>
+          </button>
+        )}
+      </div>
+
       {/* Search & Filter Header Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 font-mono text-xs">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
         <div className="flex-1 flex items-center space-x-2 bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 focus-within:border-cyan-500/50">
           <Search className="w-4 h-4 text-slate-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by event ID, user identity, threat category, or policy reason..."
+            placeholder={userRole === 'USER' ? 'Filter by prompt topic, finding, or event ID...' : 'Search by event ID, user identity, threat category, or policy reason...'}
             className="w-full bg-transparent text-slate-200 placeholder-slate-500 focus:outline-none"
           />
           {searchQuery && (
@@ -106,27 +141,16 @@ export const SecurityEventsView: React.FC<SecurityEventsViewProps> = ({
             <option value="MEDIUM">Risk: Medium (30-69)</option>
             <option value="LOW">Risk: Low (&lt;30)</option>
           </select>
-
-          {onExportEvents && (
-            <button
-              onClick={onExportEvents}
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-slate-100 transition-colors cursor-pointer"
-              title="Export DSAR Audit Logs"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Export</span>
-            </button>
-          )}
         </div>
       </div>
 
       {/* Events Table Container */}
       <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-        <div className="flex justify-between items-center mb-3 font-mono text-xs">
+        <div className="flex justify-between items-center mb-3 text-xs">
           <span className="text-slate-400">
-            Showing <span className="text-slate-200 font-bold">{filteredEvents.length}</span> of {events.length} audit events
+            Showing <span className="text-slate-200 font-bold">{filteredEvents.length}</span> of {events.length} {userRole === 'USER' ? 'personal activity records' : 'audit events'}
           </span>
-          <span className="text-[10px] text-slate-500">Raw secrets excluded per security policy</span>
+          <span className="text-[11px] text-slate-500">Raw secrets excluded per security policy</span>
         </div>
 
         {filteredEvents.length === 0 ? (
@@ -220,7 +244,10 @@ export const SecurityEventsView: React.FC<SecurityEventsViewProps> = ({
               <div>
                 <h3 className="text-sm font-bold text-slate-100 flex items-center space-x-2">
                   <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                  <span>SECURITY EVENT INVESTIGATION: {selectedEvent.id}</span>
+                  <span>
+                    {userRole === 'USER' ? 'PROMPT INTERACTION DETAILS: ' : 'SECURITY EVENT INVESTIGATION: '}
+                    {selectedEvent.id}
+                  </span>
                 </h3>
                 <span className="text-[10px] text-slate-400">
                   {new Date(selectedEvent.timestamp).toUTCString()}

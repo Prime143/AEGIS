@@ -182,8 +182,8 @@ export class PolicyEngine {
       };
     }
 
-    // 3. Provider permission check
-    if (orgContext && orgContext.allowedProviders && orgContext.allowedProviders.length > 0) {
+    // 3. Provider permission check (skip for internal response inspection)
+    if (evalContext.userEmail !== 'response.inspector@aegis-gateway.internal' && orgContext && orgContext.allowedProviders && orgContext.allowedProviders.length > 0) {
       if (!orgContext.allowedProviders.includes(evalContext.providerId)) {
         return {
           decision: 'BLOCK',
