@@ -169,12 +169,8 @@ export default function App() {
         if (profRes.ok) {
           const pData: UserAwarenessProfile[] = await profRes.json();
           setAwarenessProfiles(pData);
-          if (effectiveRole === 'USER') {
-            setCurrentUserProfile(pData[0] || null);
-          } else {
-            const myProfile = pData.find(p => p.userEmail === effectiveEmail) || pData[0] || null;
-            setCurrentUserProfile(myProfile);
-          }
+          const myProfile = pData.find(p => p.userEmail === effectiveEmail) || pData[0] || null;
+          setCurrentUserProfile(myProfile);
         }
       } catch (awarenessErr) {
         console.error('Awareness sync error:', awarenessErr);
@@ -671,6 +667,8 @@ export default function App() {
             profile={currentUserProfile}
             onCompleteModule={handleCompleteTraining}
             userEmail={userEmail}
+            allProfiles={awarenessProfiles.filter(p => p.accountType === 'HUMAN_EMPLOYEE')}
+            onSelectProfile={(p) => setCurrentUserProfile(p)}
           />
         )}
       </main>

@@ -104,6 +104,11 @@ export const ENTERPRISE_TRAINING_MODULES: TrainingModule[] = [
 const ENTERPRISE_DIRECTORY: Record<string, { name: string; department: string; accountType: 'HUMAN_EMPLOYEE' | 'SECURITY_ADMIN' | 'SERVICE_PRINCIPAL' }> = {
   'current.user@nexus-corp.com': { name: 'Alex Rivera', department: 'Software Engineering', accountType: 'HUMAN_EMPLOYEE' },
   'developer@nexus-corp.com': { name: 'Marcus Vance', department: 'Core Infrastructure', accountType: 'HUMAN_EMPLOYEE' },
+  'jordan.hayes@nexus-corp.com': { name: 'Jordan Hayes', department: 'Cloud DevOps & SRE', accountType: 'HUMAN_EMPLOYEE' },
+  'claire.dupont@nexus-corp.com': { name: 'Claire Dupont', department: 'Customer Experience & Support', accountType: 'HUMAN_EMPLOYEE' },
+  'tariq.mansoor@nexus-corp.com': { name: 'Tariq Al-Mansoor', department: 'Applied AI Research & Prototyping', accountType: 'HUMAN_EMPLOYEE' },
+  'kavita.sharma@nexus-corp.com': { name: 'Kavita Sharma', department: 'Product Architecture & Strategy', accountType: 'HUMAN_EMPLOYEE' },
+  'vikram.patel@nexus-corp.com': { name: 'Vikram Patel', department: 'Application Security QA', accountType: 'HUMAN_EMPLOYEE' },
   'hr@nexus-corp.com': { name: 'Sarah Jenkins', department: 'People Operations & HR', accountType: 'HUMAN_EMPLOYEE' },
   'finance@nexus-corp.com': { name: 'Elena Rostova', department: 'Financial Planning & Analysis', accountType: 'HUMAN_EMPLOYEE' },
   'marketing@nexus-corp.com': { name: 'Liam Gallagher', department: 'Growth & Brand Marketing', accountType: 'HUMAN_EMPLOYEE' },

@@ -60,8 +60,17 @@ const activeSessions = new Map<string, ActiveSession>();
 const PROTOTYPE_USERS: Array<{ email: string; role: UserRole; name: string }> = [
   { email: 'admin.soc@nexus-corp.com', role: 'ADMIN', name: 'Lead Security Administrator' },
   { email: 'analyst@nexus-corp.com', role: 'SECURITY_ANALYST', name: 'SOC Security Analyst' },
-  { email: 'current.user@nexus-corp.com', role: 'USER', name: 'Corporate Employee' },
-  { email: 'test-user', role: 'USER', name: 'Automated Test User' }
+  { email: 'current.user@nexus-corp.com', role: 'USER', name: 'Alex Rivera (Software Engineering)' },
+  { email: 'jordan.hayes@nexus-corp.com', role: 'USER', name: 'Jordan Hayes (Cloud DevOps & SRE)' },
+  { email: 'claire.dupont@nexus-corp.com', role: 'USER', name: 'Claire Dupont (Customer Support)' },
+  { email: 'tariq.mansoor@nexus-corp.com', role: 'USER', name: 'Tariq Al-Mansoor (Applied AI Research)' },
+  { email: 'kavita.sharma@nexus-corp.com', role: 'USER', name: 'Kavita Sharma (Product Architecture)' },
+  { email: 'vikram.patel@nexus-corp.com', role: 'USER', name: 'Vikram Patel (AppSec QA)' },
+  { email: 'finance@nexus-corp.com', role: 'USER', name: 'Elena Rostova (Financial Planning)' },
+  { email: 'marketing@nexus-corp.com', role: 'USER', name: 'Liam Gallagher (Growth & Marketing)' },
+  { email: 'legal@nexus-corp.com', role: 'USER', name: 'Rachel Adams (Corporate Legal)' },
+  { email: 'hr@nexus-corp.com', role: 'USER', name: 'Sarah Jenkins (People Operations)' },
+  { email: 'test-user', role: 'USER', name: 'Automated CI Test Harness' }
 ];
 
 // Seed default session tokens

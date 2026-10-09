@@ -19,12 +19,16 @@ interface UserCoachingViewProps {
   profile: UserAwarenessProfile | null;
   onCompleteModule: (email: string, moduleId: string) => Promise<void>;
   userEmail: string;
+  allProfiles?: UserAwarenessProfile[];
+  onSelectProfile?: (profile: UserAwarenessProfile) => void;
 }
 
 export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
   profile,
   onCompleteModule,
-  userEmail
+  userEmail,
+  allProfiles = [],
+  onSelectProfile
 }) => {
   const [activeModuleModal, setActiveModuleModal] = useState<TrainingModule | null>(null);
   const [isCompleting, setIsCompleting] = useState(false);
@@ -48,16 +52,33 @@ export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
         <div>
           <h2 className="text-base font-bold text-slate-100 flex items-center space-x-2">
             <GraduationCap className="w-5 h-5 text-cyan-400" />
-            <span>My Security Awareness &amp; AI Coaching</span>
+            <span>Security Awareness &amp; AI Employee Coaching</span>
           </h2>
           <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-            Personalized safety rating and just-in-time micro-learning to help you prompt productively while protecting company data.
+            Personalized safety rating, policy adherence telemetry, and targeted micro-learning to help team members prompt safely without compromising company secrets.
           </p>
         </div>
 
         <div className="flex items-center space-x-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-lg text-xs">
-          <span className="text-slate-400">Account:</span>
-          <span className="font-semibold text-slate-200">{userEmail}</span>
+          <span className="text-slate-400">Employee:</span>
+          {allProfiles.length > 0 && onSelectProfile ? (
+            <select
+              value={profile.userEmail}
+              onChange={(e) => {
+                const target = allProfiles.find(p => p.userEmail === e.target.value);
+                if (target) onSelectProfile(target);
+              }}
+              className="bg-transparent text-slate-200 font-semibold text-xs focus:outline-none cursor-pointer pr-1"
+            >
+              {allProfiles.map(p => (
+                <option key={p.userEmail} value={p.userEmail} className="bg-slate-900 text-slate-100">
+                  {p.name} ({p.department}) &mdash; {p.postureTier.replace('_', ' ')}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span className="font-semibold text-slate-200">{profile.name} ({profile.department})</span>
+          )}
         </div>
       </div>
 
@@ -116,6 +137,39 @@ export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Diagnosed Policy Violations & Why Awareness Training Is Required */}
+      {profile.primaryGaps.length > 0 && (
+        <div className="p-5 rounded-xl bg-slate-900/90 border border-amber-500/30 space-y-3">
+          <div className="flex items-center space-x-2 text-amber-300 font-semibold text-xs uppercase tracking-wide">
+            <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <span>Diagnosed Security Gaps &amp; Why Training Is Required</span>
+          </div>
+
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Perimeter telemetry recorded recurring interactions that violated enterprise AI safety guardrails. Rather than disciplinary action, AEGIS prescribes just-in-time micro-training to address the following root causes:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            {profile.primaryGaps.map((gap, i) => (
+              <div key={i} className="p-3.5 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-amber-300 text-xs">{gap.category} Policy Violation</span>
+                  <span className="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-800 text-amber-300 text-[10px] font-mono">
+                    {gap.incidentCount} incident{gap.incidentCount > 1 ? 's' : ''}
+                  </span>
+                </div>
+                <p className="text-slate-300 text-[11px] leading-relaxed">
+                  {gap.description}
+                </p>
+                <div className="text-[10px] text-cyan-400 pt-1 border-t border-slate-800/80">
+                  Targeted Micro-Module: <strong>{profile.recommendedModules.find(m => m.category === gap.category)?.id || 'SEC-101'}</strong>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Recommended & Assigned Micro-Learning Modules */}
       <div className="space-y-3">
@@ -178,6 +232,14 @@ export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
                   <p className="text-xs text-slate-400 leading-relaxed">
                     {mod.description}
                   </p>
+
+                  {/* Why this training is needed */}
+                  {mod.relevanceExplanation && (
+                    <div className="p-2.5 rounded-lg bg-cyan-950/40 border border-cyan-800/50 text-[11px] text-cyan-200">
+                      <strong className="text-cyan-300 font-semibold block mb-0.5">Why this training is needed:</strong>
+                      {mod.relevanceExplanation}
+                    </div>
+                  )}
 
                   {/* Key Takeaways Preview */}
                   <div className="pt-2 border-t border-slate-800/60 space-y-1">
@@ -272,6 +334,13 @@ export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
               <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 leading-relaxed">
                 {activeModuleModal.description}
               </div>
+
+              {activeModuleModal.relevanceExplanation && (
+                <div className="p-3 rounded-lg bg-cyan-950/40 border border-cyan-800/60 text-cyan-200">
+                  <strong className="text-cyan-300 font-semibold block mb-0.5">Why This Module Is Prescribed:</strong>
+                  {activeModuleModal.relevanceExplanation}
+                </div>
+              )}
 
               <div className="space-y-2">
                 <span className="font-semibold text-slate-200 block">Key Takeaways for Daily Work:</span>
