@@ -86,9 +86,35 @@ function checkPage(doc: jsPDF, currentY: number, neededHeight: number, title: st
 }
 
 /**
- * Exports a comprehensive Employee Security Awareness & Coaching Dossier PDF
+ * Triggers a download of a jsPDF document ensuring the file is saved as a true PDF
  */
-export function exportEmployeeDossierPdf(profile: UserAwarenessProfile): void {
+export function savePdfDocument(doc: jsPDF, filename: string): void {
+  const safeFilename = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    try {
+      const rawBlob = doc.output('blob');
+      const blob = new Blob([rawBlob], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = safeFilename;
+      a.dataset.downloadurl = ['application/pdf', safeFilename, url].join(':');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      return;
+    } catch (e) {
+      console.warn('Browser blob download fallback:', e);
+    }
+  }
+  doc.save(safeFilename);
+}
+
+/**
+ * Builds the complete Employee Security Awareness & Coaching Dossier PDF document
+ */
+export function buildEmployeeDossierPdfDoc(profile: UserAwarenessProfile): jsPDF {
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const reportDate = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
@@ -387,19 +413,26 @@ export function exportEmployeeDossierPdf(profile: UserAwarenessProfile): void {
     drawFooter(doc, p, totalPages);
   }
 
-  // Trigger browser PDF download
-  const safeFilename = `AEGIS_Awareness_Dossier_${profile.name.replace(/\s+/g, '_')}_${profile.awarenessScore}pts.pdf`;
-  doc.save(safeFilename);
+  return doc;
 }
 
 /**
- * Exports a professional Security Audit & Forensic Event Log PDF
+ * Triggers browser download of the Employee Awareness Dossier PDF
  */
-export function exportSecurityAuditPdf(
+export function exportEmployeeDossierPdf(profile: UserAwarenessProfile): void {
+  const doc = buildEmployeeDossierPdfDoc(profile);
+  const safeFilename = `AEGIS_Awareness_Dossier_${profile.name.replace(/[^a-zA-Z0-9]/g, '_')}_${profile.awarenessScore}pts.pdf`;
+  savePdfDocument(doc, safeFilename);
+}
+
+/**
+ * Builds a professional Security Audit & Forensic Event Log PDF document
+ */
+export function buildSecurityAuditPdfDoc(
   events: LogEvent[],
   userRole: UserRole = 'ADMIN',
   operatorEmail: string = 'admin.soc@nexus-corp.com'
-): void {
+): jsPDF {
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
   const LANDSCAPE_WIDTH = 297;
   const LANDSCAPE_HEIGHT = 210;
@@ -577,6 +610,18 @@ export function exportSecurityAuditPdf(
     drawLandscapeFooter(p, totalPages);
   }
 
+  return doc;
+}
+
+/**
+ * Triggers browser download of the Security Audit & Forensic Event Log PDF
+ */
+export function exportSecurityAuditPdf(
+  events: LogEvent[],
+  userRole: UserRole = 'ADMIN',
+  operatorEmail: string = 'admin.soc@nexus-corp.com'
+): void {
+  const doc = buildSecurityAuditPdfDoc(events, userRole, operatorEmail);
   const safeFilename = `AEGIS_Security_Audit_Report_${Date.now()}.pdf`;
-  doc.save(safeFilename);
+  savePdfDocument(doc, safeFilename);
 }

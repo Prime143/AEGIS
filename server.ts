@@ -43,6 +43,7 @@ import { GatewayPipeline } from './src/core/gateway/GatewayPipeline';
 import { OrganizationService } from './src/core/organization/OrganizationService';
 import { ExperimentRunner, EVALUATION_DATASET } from './src/core/experiments/ExperimentRunner';
 import { AwarenessService } from './src/core/awareness/AwarenessService';
+import { buildEmployeeDossierPdfDoc, buildSecurityAuditPdfDoc } from './src/utils/pdfReports';
 
 dotenv.config();
 
@@ -736,10 +737,19 @@ async function startServer() {
   });
 
   app.get('/api/dsar/export', authMiddleware, async (req, res) => {
-    const { email } = req.query;
+    const { email, format } = req.query;
     if (!email || typeof email !== 'string') return res.status(400).json({ error: 'Missing email' });
     const logs = await getLogs();
     const userLogs = logs.filter(l => l.user === email);
+
+    if (format === 'pdf') {
+      const doc = buildSecurityAuditPdfDoc(userLogs, 'USER', email);
+      const safeFilename = `AEGIS_DSAR_User_Records_${email.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
+      return res.send(Buffer.from(doc.output('arraybuffer')));
+    }
+
     res.json({
       exportDate: new Date().toISOString(),
       user: email,
@@ -796,9 +806,30 @@ async function startServer() {
     res.json({ success });
   });
 
-  app.get('/api/logs', authMiddleware, requireRole('ADMIN', 'SECURITY_ANALYST'), async (req, res) => {
+  app.get('/api/logs', authMiddleware, requireRole('ADMIN', 'SECURITY_ANALYST'), async (req: AuthenticatedRequest, res) => {
     const logs = await getLogs();
+    if (req.query.format === 'pdf') {
+      const doc = buildSecurityAuditPdfDoc(logs, req.user?.role || 'ADMIN', req.user?.email || 'admin.soc@nexus-corp.com');
+      const safeFilename = `AEGIS_Security_Audit_Report_${Date.now()}.pdf`;
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
+      return res.send(Buffer.from(doc.output('arraybuffer')));
+    }
     res.json(logs);
+  });
+
+  app.get('/api/reports/audit/pdf', authMiddleware, requireRole('ADMIN', 'SECURITY_ANALYST'), async (req: AuthenticatedRequest, res) => {
+    try {
+      const logs = await getLogs();
+      const doc = buildSecurityAuditPdfDoc(logs, req.user?.role || 'ADMIN', req.user?.email || 'admin.soc@nexus-corp.com');
+      const safeFilename = `AEGIS_Security_Audit_Report_${Date.now()}.pdf`;
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
+      return res.send(Buffer.from(doc.output('arraybuffer')));
+    } catch (e: any) {
+      console.error('Failed to generate security audit PDF:', e);
+      res.status(500).json({ error: 'Failed to generate audit PDF', message: e.message });
+    }
   });
 
   // -------------------------------------------------------------
@@ -854,6 +885,37 @@ async function startServer() {
     }
   });
 
+  app.get(['/api/reports/awareness/:email/pdf', '/api/awareness/report/:email/pdf'], authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const targetEmail = req.params.email;
+      const currentUserEmail = req.user?.email || '';
+      const currentUserRole = req.user?.role || 'USER';
+
+      if (currentUserRole === 'USER' && currentUserEmail !== targetEmail) {
+        return res.status(403).json({ error: 'Forbidden: You may only download your own security awareness dossier' });
+      }
+
+      const logs = await getLogs();
+      const allTrainings = await getTrainings();
+      const userLogs = logs.filter(l => l.user === targetEmail);
+      const userTrainings = allTrainings.filter(t => t.userEmail === targetEmail);
+
+      const targetRole = PROTOTYPE_USERS.find(u => u.email === targetEmail)?.role ||
+        userLogs[0]?.user_role || 'USER';
+
+      const profile = AwarenessService.computeProfile(targetEmail, targetRole, userLogs, userTrainings);
+      const doc = buildEmployeeDossierPdfDoc(profile);
+      const safeFilename = `AEGIS_Awareness_Dossier_${profile.name.replace(/[^a-zA-Z0-9]/g, '_')}_${profile.awarenessScore}pts.pdf`;
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
+      return res.send(Buffer.from(doc.output('arraybuffer')));
+    } catch (e: any) {
+      console.error('Failed to generate awareness PDF dossier:', e);
+      res.status(500).json({ error: 'Failed to generate PDF dossier', message: e.message });
+    }
+  });
+
   app.get('/api/awareness/profile/:email', authMiddleware, async (req: AuthenticatedRequest, res) => {
     try {
       const targetEmail = req.params.email;
@@ -874,6 +936,15 @@ async function startServer() {
         userLogs[0]?.user_role || 'USER';
 
       const profile = AwarenessService.computeProfile(targetEmail, targetRole, userLogs, userTrainings);
+
+      if (req.query.format === 'pdf') {
+        const doc = buildEmployeeDossierPdfDoc(profile);
+        const safeFilename = `AEGIS_Awareness_Dossier_${profile.name.replace(/[^a-zA-Z0-9]/g, '_')}_${profile.awarenessScore}pts.pdf`;
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
+        return res.send(Buffer.from(doc.output('arraybuffer')));
+      }
+
       res.json(profile);
     } catch (e: any) {
       console.error('Failed to retrieve user awareness profile:', e);

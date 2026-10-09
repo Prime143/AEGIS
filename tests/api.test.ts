@@ -529,6 +529,33 @@ test('AEGIS HTTP API & Gateway Integration Test Suite', async (t) => {
       exportSecurityAuditPdf(logs, 'ADMIN', 'admin.soc@nexus-corp.com');
     });
 
+    // 4. Test backend streaming endpoint for employee awareness PDF
+    const streamedPdfRes = await fetch(`${baseUrl}/api/reports/awareness/${encodeURIComponent('jordan.hayes@nexus-corp.com')}/pdf`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    assert.strictEqual(streamedPdfRes.status, 200);
+    assert.strictEqual(streamedPdfRes.headers.get('content-type'), 'application/pdf');
+    const pdfBuf = await streamedPdfRes.arrayBuffer();
+    const pdfHeader = Buffer.from(pdfBuf).subarray(0, 5).toString('utf-8');
+    assert.strictEqual(pdfHeader, '%PDF-', 'Streamed awareness dossier is a valid PDF binary');
+
+    // 5. Test backend streaming endpoint for security audit PDF
+    const streamedAuditRes = await fetch(`${baseUrl}/api/reports/audit/pdf`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    assert.strictEqual(streamedAuditRes.status, 200);
+    assert.strictEqual(streamedAuditRes.headers.get('content-type'), 'application/pdf');
+    const auditPdfBuf = await streamedAuditRes.arrayBuffer();
+    const auditHeader = Buffer.from(auditPdfBuf).subarray(0, 5).toString('utf-8');
+    assert.strictEqual(auditHeader, '%PDF-', 'Streamed audit report is a valid PDF binary');
+
+    // 6. Test DSAR export with format=pdf
+    const dsarPdfRes = await fetch(`${baseUrl}/api/dsar/export?email=${encodeURIComponent('current.user@nexus-corp.com')}&format=pdf`, {
+      headers: { 'Authorization': `Bearer ${userToken}` }
+    });
+    assert.strictEqual(dsarPdfRes.status, 200);
+    assert.strictEqual(dsarPdfRes.headers.get('content-type'), 'application/pdf');
+
     // Clean up any test PDF artifacts generated in workspace
     const files = fs.readdirSync(process.cwd());
     for (const f of files) {
