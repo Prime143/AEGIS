@@ -30,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (role === 'USER') {
       return [
         { id: 'console', label: 'AI Prompt Console' },
+        { id: 'coaching', label: 'My Security Coaching' },
         { id: 'events', label: 'My Activity & DSAR' },
         { id: 'policies', label: 'Security Policies (Read-Only)' }
       ];
@@ -39,6 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { id: 'dashboard', label: 'SOC Dashboard' },
         { id: 'console', label: 'AI Boundary Console' },
         { id: 'events', label: 'Security Events' },
+        { id: 'awareness', label: 'Awareness & Training' },
         { id: 'policies', label: 'Policies' },
         { id: 'detectors', label: 'Detectors' },
         { id: 'providers', label: 'AI Providers' },
@@ -51,6 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       { id: 'dashboard', label: 'SOC Dashboard' },
       { id: 'console', label: 'AI Console' },
       { id: 'events', label: 'Security Events' },
+      { id: 'awareness', label: 'Awareness & Training' },
       { id: 'policies', label: 'Policies' },
       { id: 'detectors', label: 'Detectors' },
       { id: 'providers', label: 'AI Providers' },

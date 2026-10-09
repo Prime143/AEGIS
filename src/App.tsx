@@ -9,9 +9,11 @@ import { ProvidersView } from './components/views/ProvidersView';
 import { OrganizationView } from './components/views/OrganizationView';
 import { ExperimentsView } from './components/views/ExperimentsView';
 import { SystemHealthView } from './components/views/SystemHealthView';
+import { AwarenessAdminView } from './components/views/AwarenessAdminView';
+import { UserCoachingView } from './components/views/UserCoachingView';
 
 import { LogEvent, EnterpriseRule, DlpPolicy, ApiKey } from '../database';
-import { PolicyRule, OrganizationContext, AIProviderMetadata, UserRole } from './core/types';
+import { PolicyRule, OrganizationContext, AIProviderMetadata, UserRole, UserAwarenessProfile, TrainingModule } from './core/types';
 import { GatewayInteractionResponse } from './core/gateway/GatewayPipeline';
 
 export default function App() {
@@ -42,6 +44,11 @@ export default function App() {
     allowedProviders: [],
     retentionDays: 90
   });
+
+  // Human Risk Management & Security Awareness States
+  const [awarenessProfiles, setAwarenessProfiles] = useState<UserAwarenessProfile[]>([]);
+  const [trainingModules, setTrainingModules] = useState<TrainingModule[]>([]);
+  const [currentUserProfile, setCurrentUserProfile] = useState<UserAwarenessProfile | null>(null);
 
   const [isProcessingPrompt, setIsProcessingPrompt] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
@@ -149,6 +156,29 @@ export default function App() {
           setEvents(dData.interactions || []);
         }
       }
+
+      // 10. Human Risk Management & Security Awareness Profiles
+      try {
+        const modRes = await fetch('/api/awareness/modules', { headers });
+        if (modRes.ok) {
+          const mData = await modRes.json();
+          setTrainingModules(mData);
+        }
+
+        const profRes = await fetch('/api/awareness/profiles', { headers });
+        if (profRes.ok) {
+          const pData: UserAwarenessProfile[] = await profRes.json();
+          setAwarenessProfiles(pData);
+          if (effectiveRole === 'USER') {
+            setCurrentUserProfile(pData[0] || null);
+          } else {
+            const myProfile = pData.find(p => p.userEmail === effectiveEmail) || pData[0] || null;
+            setCurrentUserProfile(myProfile);
+          }
+        }
+      } catch (awarenessErr) {
+        console.error('Awareness sync error:', awarenessErr);
+      }
     } catch (e) {
       console.error('Failed to sync gateway state:', e);
     }
@@ -170,8 +200,8 @@ export default function App() {
     setUserEmail(targetEmail);
 
     // Adjust activeTab logically to match role workspace permissions
-    const userAllowedTabs = ['console', 'events', 'policies'];
-    const analystAllowedTabs = ['dashboard', 'console', 'events', 'policies', 'detectors', 'providers', 'experiments', 'health'];
+    const userAllowedTabs = ['console', 'coaching', 'events', 'policies'];
+    const analystAllowedTabs = ['dashboard', 'console', 'events', 'awareness', 'policies', 'detectors', 'providers', 'experiments', 'health'];
 
     if (newRole === 'USER' && !userAllowedTabs.includes(activeTab)) {
       setActiveTab('console');
@@ -264,6 +294,40 @@ export default function App() {
       }
     } catch (e) {
       console.error('Revoke API Key failed:', e);
+    }
+  };
+
+  // Assign Security Training Module
+  const handleAssignTraining = async (email: string, moduleId: string) => {
+    try {
+      const res = await fetch('/api/awareness/assign', {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify({ email, moduleId })
+      });
+      if (res.ok) {
+        showNotification(`Assigned training module ${moduleId} to ${email}`);
+        await fetchGatewayState();
+      }
+    } catch (e) {
+      console.error('Assign training failed:', e);
+    }
+  };
+
+  // Complete Security Training Module
+  const handleCompleteTraining = async (email: string, moduleId: string) => {
+    try {
+      const res = await fetch('/api/awareness/complete', {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify({ email, moduleId })
+      });
+      if (res.ok) {
+        showNotification(`Module ${moduleId} completed! Posture score updated.`);
+        await fetchGatewayState();
+      }
+    } catch (e) {
+      console.error('Complete training failed:', e);
     }
   };
 
@@ -588,6 +652,26 @@ export default function App() {
 
         {activeTab === 'health' && (
           <SystemHealthView />
+        )}
+
+        {activeTab === 'awareness' && (
+          <AwarenessAdminView
+            profiles={awarenessProfiles}
+            modules={trainingModules}
+            onAssignTraining={handleAssignTraining}
+            onCompleteTraining={handleCompleteTraining}
+            userRole={currentRole}
+            authToken={authToken}
+            onRefresh={() => fetchGatewayState()}
+          />
+        )}
+
+        {activeTab === 'coaching' && (
+          <UserCoachingView
+            profile={currentUserProfile}
+            onCompleteModule={handleCompleteTraining}
+            userEmail={userEmail}
+          />
         )}
       </main>
 

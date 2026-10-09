@@ -433,4 +433,69 @@ test('AEGIS HTTP API & Gateway Integration Test Suite', async (t) => {
     });
     assert.strictEqual(oversizedRes.status, 413);
   });
+
+  await t.test('13. Security Awareness & Human Risk Engine: Profiles, gaps, and training assignments', async () => {
+    // 1. Fetch available training modules
+    const modulesRes = await fetch(`${baseUrl}/api/awareness/modules`, {
+      headers: { 'Authorization': `Bearer ${userToken}` }
+    });
+    assert.strictEqual(modulesRes.status, 200);
+    const modules = await modulesRes.json();
+    assert.ok(Array.isArray(modules));
+    assert.ok(modules.length >= 5);
+    assert.ok(modules.some((m: any) => m.id === 'SEC-101'));
+    assert.ok(modules.some((m: any) => m.id === 'PRIV-201'));
+
+    // 2. User fetches their own awareness profile
+    const userProfileRes = await fetch(`${baseUrl}/api/awareness/profile/current.user@nexus-corp.com`, {
+      headers: { 'Authorization': `Bearer ${userToken}` }
+    });
+    assert.strictEqual(userProfileRes.status, 200);
+    const userProfile = await userProfileRes.json();
+    assert.strictEqual(userProfile.userEmail, 'current.user@nexus-corp.com');
+    assert.ok(typeof userProfile.awarenessScore === 'number');
+    assert.ok(Array.isArray(userProfile.recommendedModules));
+    assert.ok(userProfile.aiExecutiveSummary.length > 20);
+
+    // 3. User attempts to inspect another employee's dossier -> 403 Forbidden
+    const forbiddenRes = await fetch(`${baseUrl}/api/awareness/profile/admin.soc@nexus-corp.com`, {
+      headers: { 'Authorization': `Bearer ${userToken}` }
+    });
+    assert.strictEqual(forbiddenRes.status, 403);
+
+    // 4. Admin assigns training module PRIV-201 to user
+    const assignRes = await fetch(`${baseUrl}/api/awareness/assign`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`
+      },
+      body: JSON.stringify({
+        email: 'current.user@nexus-corp.com',
+        moduleId: 'PRIV-201'
+      })
+    });
+    assert.strictEqual(assignRes.status, 200);
+    const assignment = await assignRes.json();
+    assert.strictEqual(assignment.moduleId, 'PRIV-201');
+    assert.strictEqual(assignment.status, 'ASSIGNED');
+
+    // 5. User marks module PRIV-201 as completed
+    const completeRes = await fetch(`${baseUrl}/api/awareness/complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      },
+      body: JSON.stringify({
+        email: 'current.user@nexus-corp.com',
+        moduleId: 'PRIV-201'
+      })
+    });
+    assert.strictEqual(completeRes.status, 200);
+    const completed = await completeRes.json();
+    assert.strictEqual(completed.status, 'COMPLETED');
+    assert.ok(completed.completedAt);
+  });
 });
+

@@ -308,3 +308,57 @@ export interface ExperimentManifest {
   conditions: Record<string, ComprehensiveExperimentMetrics>;
 }
 
+// ---------------------------------------------------------------------------
+// Security Awareness & Human Risk Management (HRM) Interfaces
+// ---------------------------------------------------------------------------
+
+export interface TrainingModule {
+  id: string;
+  title: string;
+  category: DetectionCategory;
+  description: string;
+  durationMinutes: number;
+  level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  keyTakeaways: string[];
+  actionItem: string;
+  relevanceExplanation: string;
+}
+
+export interface TrainingAssignment {
+  id: string;
+  userEmail: string;
+  moduleId: string;
+  status: 'ASSIGNED' | 'COMPLETED';
+  assignedBy: string;
+  assignedAt: string;
+  completedAt?: string;
+}
+
+export interface UserAwarenessProfile {
+  userEmail: string;
+  userRole: UserRole;
+  totalInteractions: number;
+  cleanInteractions: number;
+  violationsCount: number;
+  blockedCount: number;
+  maskedCount: number;
+  awarenessScore: number; // 0 to 100
+  postureTier: 'EXEMPLARY' | 'GOOD' | 'NEEDS_COACHING' | 'HIGH_RISK';
+  primaryGaps: Array<{
+    category: DetectionCategory | string;
+    incidentCount: number;
+    description: string;
+  }>;
+  recommendedModules: TrainingModule[];
+  assignedModules: Array<TrainingAssignment & { moduleTitle: string; durationMinutes: number }>;
+  recentIncidentsSummary: Array<{
+    id: string;
+    timestamp: string;
+    attackType: string;
+    action: string;
+    riskScore: number;
+  }>;
+  aiExecutiveSummary: string;
+  lastEvaluatedAt: string;
+}
+

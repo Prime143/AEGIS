@@ -28,7 +28,10 @@ import {
   getPolicies,
   savePolicies,
   getOrganization,
-  updateOrganization
+  updateOrganization,
+  getTrainings,
+  assignTraining,
+  completeTraining
 } from './database';
 
 import { UserRole, SystemHealthReport } from './src/core/types';
@@ -39,6 +42,7 @@ import { AuditService } from './src/core/audit/AuditService';
 import { GatewayPipeline } from './src/core/gateway/GatewayPipeline';
 import { OrganizationService } from './src/core/organization/OrganizationService';
 import { ExperimentRunner, EVALUATION_DATASET } from './src/core/experiments/ExperimentRunner';
+import { AwarenessService } from './src/core/awareness/AwarenessService';
 
 dotenv.config();
 
@@ -786,6 +790,132 @@ async function startServer() {
   app.get('/api/logs', authMiddleware, requireRole('ADMIN', 'SECURITY_ANALYST'), async (req, res) => {
     const logs = await getLogs();
     res.json(logs);
+  });
+
+  // -------------------------------------------------------------
+  // SECURITY AWARENESS & HUMAN RISK MANAGEMENT (HRM)
+  // -------------------------------------------------------------
+  app.get('/api/awareness/modules', authMiddleware, (req, res) => {
+    res.json(AwarenessService.getModules());
+  });
+
+  app.get('/api/awareness/profiles', authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const logs = await getLogs();
+      const allTrainings = await getTrainings();
+      const currentUserEmail = req.user?.email || 'current.user@nexus-corp.com';
+      const currentUserRole = req.user?.role || 'USER';
+
+      // If regular USER, return only their own profile
+      if (currentUserRole === 'USER') {
+        const userLogs = logs.filter(l => l.user === currentUserEmail);
+        const userTrainings = allTrainings.filter(t => t.userEmail === currentUserEmail);
+        const profile = AwarenessService.computeProfile(currentUserEmail, currentUserRole, userLogs, userTrainings);
+        return res.json([profile]);
+      }
+
+      // For ADMIN & SECURITY_ANALYST: compile list of all known users
+      const userMap = new Map<string, { email: string; role: UserRole }>();
+
+      // Populate from prototype users first
+      for (const u of PROTOTYPE_USERS) {
+        userMap.set(u.email, { email: u.email, role: u.role });
+      }
+
+      // Add any distinct users found in audit logs
+      for (const log of logs) {
+        if (!userMap.has(log.user)) {
+          userMap.set(log.user, { email: log.user, role: log.user_role || 'USER' });
+        }
+      }
+
+      const profiles = Array.from(userMap.values()).map(u => {
+        const userLogs = logs.filter(l => l.user === u.email);
+        const userTrainings = allTrainings.filter(t => t.userEmail === u.email);
+        return AwarenessService.computeProfile(u.email, u.role, userLogs, userTrainings);
+      });
+
+      // Sort by risk (lowest score / highest need for coaching first)
+      profiles.sort((a, b) => a.awarenessScore - b.awarenessScore);
+
+      res.json(profiles);
+    } catch (e: any) {
+      console.error('Failed to compute awareness profiles:', e);
+      res.status(500).json({ error: 'Failed to generate awareness profiles', message: e.message });
+    }
+  });
+
+  app.get('/api/awareness/profile/:email', authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const targetEmail = req.params.email;
+      const currentUserEmail = req.user?.email || '';
+      const currentUserRole = req.user?.role || 'USER';
+
+      // Non-admins/analysts can only inspect their own profile
+      if (currentUserRole === 'USER' && currentUserEmail !== targetEmail) {
+        return res.status(403).json({ error: 'Forbidden: You may only view your own security awareness profile' });
+      }
+
+      const logs = await getLogs();
+      const allTrainings = await getTrainings();
+      const userLogs = logs.filter(l => l.user === targetEmail);
+      const userTrainings = allTrainings.filter(t => t.userEmail === targetEmail);
+
+      const targetRole = PROTOTYPE_USERS.find(u => u.email === targetEmail)?.role ||
+        userLogs[0]?.user_role || 'USER';
+
+      const profile = AwarenessService.computeProfile(targetEmail, targetRole, userLogs, userTrainings);
+      res.json(profile);
+    } catch (e: any) {
+      console.error('Failed to retrieve user awareness profile:', e);
+      res.status(500).json({ error: 'Failed to retrieve profile' });
+    }
+  });
+
+  app.post('/api/awareness/assign', authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { email, moduleId } = req.body;
+      if (!email || !moduleId) {
+        return res.status(400).json({ error: 'Missing required email or moduleId' });
+      }
+
+      const currentUserRole = req.user?.role || 'USER';
+      const currentUserEmail = req.user?.email || '';
+
+      // Non-admins can only assign/self-enroll for themselves
+      if (currentUserRole === 'USER' && currentUserEmail !== email) {
+        return res.status(403).json({ error: 'Forbidden: You cannot assign training to other users' });
+      }
+
+      const assignedBy = currentUserRole === 'USER' ? 'Self-Enrollment' : (currentUserEmail || 'Security Administrator');
+      const assignment = await assignTraining(email, moduleId, assignedBy);
+      res.json(assignment);
+    } catch (e: any) {
+      console.error('Failed to assign training:', e);
+      res.status(500).json({ error: 'Failed to assign training' });
+    }
+  });
+
+  app.post('/api/awareness/complete', authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { email, moduleId } = req.body;
+      if (!email || !moduleId) {
+        return res.status(400).json({ error: 'Missing required email or moduleId' });
+      }
+
+      const currentUserRole = req.user?.role || 'USER';
+      const currentUserEmail = req.user?.email || '';
+
+      if (currentUserRole === 'USER' && currentUserEmail !== email) {
+        return res.status(403).json({ error: 'Forbidden: You cannot complete training on behalf of another user' });
+      }
+
+      const completed = await completeTraining(email, moduleId);
+      res.json(completed);
+    } catch (e: any) {
+      console.error('Failed to mark training completed:', e);
+      res.status(500).json({ error: 'Failed to record completion' });
+    }
   });
 
   // Vite development middleware or static production serve

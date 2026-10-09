@@ -83,6 +83,16 @@ export interface DlpPolicy {
   promptInjections: DlpPolicyItem;
 }
 
+export interface TrainingRecord {
+  id: string;
+  userEmail: string;
+  moduleId: string;
+  status: 'ASSIGNED' | 'COMPLETED';
+  assignedBy: string;
+  assignedAt: string;
+  completedAt?: string;
+}
+
 export interface DatabaseSchema {
   logs: LogEvent[];
   settings: GlobalSettings;
@@ -92,6 +102,7 @@ export interface DatabaseSchema {
   dlpPolicy: DlpPolicy;
   policies: PolicyRule[];
   organization: OrganizationContext;
+  trainings: TrainingRecord[];
 }
 
 const DB_PATH = path.resolve('database.json');
@@ -99,6 +110,7 @@ const TEMP_PATH = path.resolve('database.json.tmp');
 
 const DEFAULT_DB: DatabaseSchema = {
   logs: [],
+  trainings: [],
   settings: {
     policyMode: 'balanced',
     systemStatus: 'active',
@@ -252,6 +264,10 @@ export async function initDatabase(): Promise<DatabaseSchema> {
     }
     if (!dbCache.organization) {
       dbCache.organization = DEFAULT_ORGANIZATION_CONTEXT;
+      modified = true;
+    }
+    if (!dbCache.trainings) {
+      dbCache.trainings = [];
       modified = true;
     }
 
@@ -564,4 +580,59 @@ export async function updateOrganization(org: Partial<OrganizationContext>): Pro
   db.organization = { ...db.organization, ...org };
   await saveToDisk();
   return db.organization;
+}
+
+export async function getTrainings(email?: string): Promise<TrainingRecord[]> {
+  const db = await initDatabase();
+  const list = db.trainings || [];
+  if (email) {
+    return list.filter(t => t.userEmail === email);
+  }
+  return list;
+}
+
+export async function assignTraining(userEmail: string, moduleId: string, assignedBy: string): Promise<TrainingRecord> {
+  const db = await initDatabase();
+  if (!db.trainings) db.trainings = [];
+  
+  const existing = db.trainings.find(t => t.userEmail === userEmail && t.moduleId === moduleId && t.status === 'ASSIGNED');
+  if (existing) return existing;
+
+  const newRecord: TrainingRecord = {
+    id: `trn-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    userEmail,
+    moduleId,
+    status: 'ASSIGNED',
+    assignedBy,
+    assignedAt: new Date().toISOString()
+  };
+
+  db.trainings.push(newRecord);
+  await saveToDisk();
+  return newRecord;
+}
+
+export async function completeTraining(userEmail: string, moduleId: string): Promise<TrainingRecord> {
+  const db = await initDatabase();
+  if (!db.trainings) db.trainings = [];
+
+  let record = db.trainings.find(t => t.userEmail === userEmail && t.moduleId === moduleId && t.status === 'ASSIGNED');
+  if (!record) {
+    record = {
+      id: `trn-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      userEmail,
+      moduleId,
+      status: 'COMPLETED',
+      assignedBy: 'Self-Enrollment',
+      assignedAt: new Date().toISOString(),
+      completedAt: new Date().toISOString()
+    };
+    db.trainings.push(record);
+  } else {
+    record.status = 'COMPLETED';
+    record.completedAt = new Date().toISOString();
+  }
+
+  await saveToDisk();
+  return record;
 }
