@@ -3,9 +3,7 @@ import { Navbar } from './components/layout/Navbar';
 import { DashboardView } from './components/views/DashboardView';
 import { AIConsoleView } from './components/views/AIConsoleView';
 import { SecurityEventsView } from './components/views/SecurityEventsView';
-import { PoliciesView } from './components/views/PoliciesView';
 import { DetectorsView } from './components/views/DetectorsView';
-import { ProvidersView } from './components/views/ProvidersView';
 import { OrganizationView } from './components/views/OrganizationView';
 import { ExperimentsView } from './components/views/ExperimentsView';
 import { SystemHealthView } from './components/views/SystemHealthView';
@@ -20,7 +18,7 @@ import { exportSecurityAuditPdf } from './utils/pdfReports';
 export default function App() {
   const [currentRole, setCurrentRole] = useState<UserRole>('ADMIN');
   const [userEmail, setUserEmail] = useState('admin.soc@nexus-corp.com');
-  const [authToken, setAuthToken] = useState('aegis_admin_session_4f9a0c2e');
+  const [authToken, setAuthToken] = useState('aegis_admin_session_default');
   const [activeTab, setActiveTab] = useState<string>('dashboard');
 
   const [systemStatus, setSystemStatus] = useState<'active' | 'lockdown'>('active');
@@ -76,106 +74,48 @@ export default function App() {
         'Authorization': `Bearer ${effectiveToken}`
       };
 
-      // 1. Settings
-      const settingsRes = await fetch('/api/settings', { headers });
-      if (settingsRes.ok) {
-        const s = await settingsRes.json();
-        setSystemStatus(s.systemStatus || 'active');
+      // 1. Fast single-roundtrip bootstrap endpoint
+      const bootRes = await fetch('/api/bootstrap', { headers });
+      if (bootRes.ok) {
+        const data = await bootRes.json();
+        setSystemStatus(data.systemStatus || 'active');
+        setPolicies(data.policies || []);
+        setRules(data.rules || []);
+        setDlpPolicy(data.dlpPolicy || null);
+        if (data.organization) setOrganization(data.organization);
+        setApiKeys(data.apiKeys || []);
+        setHasUserConsent(!!data.hasUserConsent);
+        setEvents(data.events || []);
+        setTrainingModules(data.awarenessModules || []);
+        setAwarenessProfiles(data.awarenessProfiles || []);
+        if (data.currentUserProfile) setCurrentUserProfile(data.currentUserProfile);
+        setProviders(data.providers || []);
+        setActiveProviderId(data.activeProviderId || 'provider-safe-mock');
+        setActiveProviderName(data.activeProviderName || 'Safe Mock Provider (Simulated)');
+        setIsProviderMock(data.isProviderMock ?? true);
+        return;
       }
 
-      // 2. Providers
-      const provRes = await fetch('/api/providers', { headers });
-      if (provRes.ok) {
-        const pData = await provRes.json();
-        setProviders(pData.providers || []);
-        setActiveProviderId(pData.activeProviderId || 'provider-safe-mock');
-        const activeObj = (pData.providers || []).find((p: any) => p.id === pData.activeProviderId);
-        if (activeObj) {
-          setActiveProviderName(activeObj.name);
-          setIsProviderMock(activeObj.type === 'mock');
-        }
-      }
+      // 2. Parallel fallback if bootstrap endpoint is unavailable
+      const [settingsRes, polRes, rulesRes, dlpRes, orgRes, conRes, logsRes] = await Promise.all([
+        fetch('/api/settings', { headers }),
+        fetch('/api/policies', { headers }),
+        fetch('/api/rules', { headers }),
+        fetch('/api/dlp', { headers }),
+        fetch('/api/organization', { headers }),
+        fetch(`/api/consent/${encodeURIComponent(effectiveEmail)}`, { headers }),
+        effectiveRole !== 'USER'
+          ? fetch('/api/logs', { headers })
+          : fetch(`/api/dsar/export?email=${encodeURIComponent(effectiveEmail)}`, { headers })
+      ]);
 
-      // 3. Policies
-      const polRes = await fetch('/api/policies', { headers });
-      if (polRes.ok) {
-        const polData = await polRes.json();
-        setPolicies(polData);
-      }
-
-      // 4. Custom Rules
-      const rulesRes = await fetch('/api/rules', { headers });
-      if (rulesRes.ok) {
-        const rData = await rulesRes.json();
-        setRules(rData);
-      }
-
-      // 5. Organization
-      const orgRes = await fetch('/api/organization', { headers });
-      if (orgRes.ok) {
-        const oData = await orgRes.json();
-        setOrganization(oData);
-      }
-
-      // 6. DLP Policy Toggles
-      const dlpRes = await fetch('/api/dlp', { headers });
-      if (dlpRes.ok) {
-        const dData = await dlpRes.json();
-        setDlpPolicy(dData);
-      }
-
-      // 7. Developer API Keys (Admin only)
-      if (effectiveRole === 'ADMIN') {
-        const keysRes = await fetch('/api/keys', { headers });
-        if (keysRes.ok) {
-          const kData = await keysRes.json();
-          setApiKeys(kData);
-        }
-      } else {
-        setApiKeys([]);
-      }
-
-      // 8. User Consent Verification
-      const conRes = await fetch(`/api/consent/${encodeURIComponent(effectiveEmail)}`, { headers });
-      if (conRes.ok) {
-        const cData = await conRes.json();
-        setHasUserConsent(!!cData.consented);
-      }
-
-      // 9. Security Events / Logs (Protected RBAC)
-      if (effectiveRole !== 'USER') {
-        const logsRes = await fetch('/api/logs', { headers });
-        if (logsRes.ok) {
-          const lData = await logsRes.json();
-          setEvents(lData);
-        }
-      } else {
-        // Safe DSAR export for standard user role
-        const dsarRes = await fetch(`/api/dsar/export?email=${encodeURIComponent(effectiveEmail)}`, { headers });
-        if (dsarRes.ok) {
-          const dData = await dsarRes.json();
-          setEvents(dData.interactions || []);
-        }
-      }
-
-      // 10. Human Risk Management & Security Awareness Profiles
-      try {
-        const modRes = await fetch('/api/awareness/modules', { headers });
-        if (modRes.ok) {
-          const mData = await modRes.json();
-          setTrainingModules(mData);
-        }
-
-        const profRes = await fetch('/api/awareness/profiles', { headers });
-        if (profRes.ok) {
-          const pData: UserAwarenessProfile[] = await profRes.json();
-          setAwarenessProfiles(pData);
-          const myProfile = pData.find(p => p.userEmail === effectiveEmail) || pData[0] || null;
-          setCurrentUserProfile(myProfile);
-        }
-      } catch (awarenessErr) {
-        console.error('Awareness sync error:', awarenessErr);
-      }
+      if (settingsRes.ok) { const s = await settingsRes.json(); setSystemStatus(s.systemStatus || 'active'); }
+      if (polRes.ok) { const pol = await polRes.json(); setPolicies(pol); }
+      if (rulesRes.ok) { const r = await rulesRes.json(); setRules(r); }
+      if (dlpRes.ok) { const d = await dlpRes.json(); setDlpPolicy(d); }
+      if (orgRes.ok) { const o = await orgRes.json(); setOrganization(o); }
+      if (conRes.ok) { const c = await conRes.json(); setHasUserConsent(!!c.consented); }
+      if (logsRes.ok) { const l = await logsRes.json(); setEvents(Array.isArray(l) ? l : (l.interactions || [])); }
     } catch (e) {
       console.error('Failed to sync gateway state:', e);
     }
@@ -187,7 +127,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, [authToken, userEmail, currentRole]);
 
-  // Role Switcher & Login
+  // Role Switcher & Login (Lightning-fast execution)
   const handleRoleChange = async (newRole: UserRole) => {
     setCurrentRole(newRole);
     const targetEmail =
@@ -196,9 +136,15 @@ export default function App() {
       'current.user@nexus-corp.com';
     setUserEmail(targetEmail);
 
+    const defaultRoleToken =
+      newRole === 'ADMIN' ? 'aegis_admin_session_default' :
+      newRole === 'SECURITY_ANALYST' ? 'aegis_analyst_session_default' :
+      'aegis_user_session_default';
+    setAuthToken(defaultRoleToken);
+
     // Adjust activeTab logically to match role workspace permissions
-    const userAllowedTabs = ['console', 'coaching', 'events', 'policies'];
-    const analystAllowedTabs = ['dashboard', 'console', 'events', 'awareness', 'policies', 'detectors', 'providers', 'experiments', 'health'];
+    const userAllowedTabs = ['console', 'coaching', 'events', 'detectors'];
+    const analystAllowedTabs = ['dashboard', 'console', 'events', 'awareness', 'detectors', 'experiments', 'health'];
 
     if (newRole === 'USER' && !userAllowedTabs.includes(activeTab)) {
       setActiveTab('console');
@@ -206,17 +152,21 @@ export default function App() {
       setActiveTab('dashboard');
     }
 
+    showNotification(`Switched role to ${newRole}`);
+
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: targetEmail, role: newRole })
-      });
-      if (res.ok) {
-        const data = await res.json();
+      const [loginRes] = await Promise.all([
+        fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: targetEmail, role: newRole })
+        }),
+        fetchGatewayState(defaultRoleToken, targetEmail, newRole)
+      ]);
+
+      if (loginRes.ok) {
+        const data = await loginRes.json();
         setAuthToken(data.token);
-        showNotification(`Switched role to ${newRole} (${targetEmail})`);
-        await fetchGatewayState(data.token, targetEmail, newRole);
       }
     } catch (e) {
       console.error('Role authentication failed:', e);
@@ -592,34 +542,18 @@ export default function App() {
           />
         )}
 
-        {activeTab === 'policies' && (
-          <PoliciesView
-            policies={policies}
-            onTogglePolicy={handleTogglePolicy}
-            onAddPolicy={handleAddPolicy}
-            onDeletePolicy={handleDeletePolicy}
-            userRole={currentRole}
-            dlpPolicy={dlpPolicy}
-            onUpdateDlpPolicy={handleUpdateDlpPolicy}
-          />
-        )}
-
         {activeTab === 'detectors' && (
           <DetectorsView
             rules={rules}
             onAddRule={handleAddRule}
             onDeleteRule={handleDeleteRule}
             userRole={currentRole}
-          />
-        )}
-
-        {activeTab === 'providers' && (
-          <ProvidersView
-            providers={providers}
-            activeProviderId={activeProviderId}
-            onSelectActiveProvider={handleSelectActiveProvider}
-            userRole={currentRole}
-            authToken={authToken}
+            policies={policies}
+            onTogglePolicy={handleTogglePolicy}
+            onAddPolicy={handleAddPolicy}
+            onDeletePolicy={handleDeletePolicy}
+            dlpPolicy={dlpPolicy}
+            onUpdateDlpPolicy={handleUpdateDlpPolicy}
           />
         )}
 

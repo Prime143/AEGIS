@@ -564,5 +564,32 @@ test('AEGIS HTTP API & Gateway Integration Test Suite', async (t) => {
       }
     }
   });
+
+  await t.test('15. Fast Hydration: /api/bootstrap returns full gateway state in a single roundtrip with default token', async () => {
+    // 1. Authenticate using default admin token immediately
+    const bootRes = await fetch(`${baseUrl}/api/bootstrap`, {
+      headers: { 'Authorization': 'Bearer aegis_admin_session_default' }
+    });
+    assert.strictEqual(bootRes.status, 200);
+    const bootData = await bootRes.json();
+
+    assert.ok(bootData.systemStatus);
+    assert.ok(Array.isArray(bootData.policies));
+    assert.ok(bootData.policies.length >= 3);
+    assert.ok(Array.isArray(bootData.events));
+    assert.ok(bootData.events.length > 0);
+    assert.ok(bootData.dlpPolicy);
+    assert.ok(Array.isArray(bootData.awarenessProfiles));
+    assert.ok(bootData.awarenessProfiles.length > 0);
+    assert.ok(Array.isArray(bootData.awarenessModules));
+
+    // 2. Authenticate using default user token
+    const userBootRes = await fetch(`${baseUrl}/api/bootstrap`, {
+      headers: { 'Authorization': 'Bearer aegis_user_session_default' }
+    });
+    assert.strictEqual(userBootRes.status, 200);
+    const userBootData = await userBootRes.json();
+    assert.ok(Array.isArray(userBootData.events));
+  });
 });
 

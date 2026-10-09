@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { id: 'console', label: 'AI Prompt Console' },
         { id: 'coaching', label: 'My Security Coaching' },
         { id: 'events', label: 'My Activity & DSAR' },
-        { id: 'policies', label: 'Security Policies (Read-Only)' }
+        { id: 'detectors', label: 'Security Rules & Policies (Read-Only)' }
       ];
     }
     if (role === 'SECURITY_ANALYST') {
@@ -41,9 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { id: 'console', label: 'AI Boundary Console' },
         { id: 'events', label: 'Security Events' },
         { id: 'awareness', label: 'Awareness & Training' },
-        { id: 'policies', label: 'Policies' },
-        { id: 'detectors', label: 'Detectors' },
-        { id: 'providers', label: 'AI Providers' },
+        { id: 'detectors', label: 'Detectors & Policies' },
         { id: 'experiments', label: 'Experiments' },
         { id: 'health', label: 'System Health' }
       ];
@@ -54,9 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       { id: 'console', label: 'AI Console' },
       { id: 'events', label: 'Security Events' },
       { id: 'awareness', label: 'Awareness & Training' },
-      { id: 'policies', label: 'Policies' },
-      { id: 'detectors', label: 'Detectors' },
-      { id: 'providers', label: 'AI Providers' },
+      { id: 'detectors', label: 'Detectors & Policies' },
       { id: 'organization', label: 'Organization' },
       { id: 'experiments', label: 'Experiments' },
       { id: 'health', label: 'System Health' }

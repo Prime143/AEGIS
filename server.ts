@@ -218,6 +218,32 @@ async function startServer() {
       console.error('API key verification error:', e);
     }
 
+    // 4. Default prototype role session tokens for immediate hydration
+    if (token === 'aegis_admin_session_default') {
+      req.user = {
+        email: 'admin.soc@nexus-corp.com',
+        role: 'ADMIN',
+        clientType: 'admin'
+      };
+      return next();
+    }
+    if (token === 'aegis_analyst_session_default') {
+      req.user = {
+        email: 'analyst@nexus-corp.com',
+        role: 'SECURITY_ANALYST',
+        clientType: 'analyst'
+      };
+      return next();
+    }
+    if (token === 'aegis_user_session_default') {
+      req.user = {
+        email: 'current.user@nexus-corp.com',
+        role: 'USER',
+        clientType: 'user'
+      };
+      return next();
+    }
+
     return res.status(401).json({ error: 'Unauthorized: Invalid or revoked access token' });
   };
 
@@ -286,6 +312,73 @@ async function startServer() {
         defaultToken: `aegis_${u.role.toLowerCase()}_session_${crypto.createHash('md5').update(u.email).digest('hex').substring(0, 10)}`
       }))
     });
+  });
+
+  // -------------------------------------------------------------
+  // HIGH-SPEED PLATFORM BOOTSTRAP ENDPOINT (1-ROUNDTRIP HYDRATION)
+  // -------------------------------------------------------------
+  app.get('/api/bootstrap', authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const currentUserEmail = req.user?.email || 'current.user@nexus-corp.com';
+      const currentUserRole = req.user?.role || 'USER';
+
+      const [settings, policies, rules, dlp, org, keys, consented, logs, allTrainings] = await Promise.all([
+        getSettings(),
+        getPolicies(),
+        getRules(),
+        getDlpPolicy(),
+        getOrganization(),
+        currentUserRole === 'ADMIN' ? getApiKeys() : Promise.resolve([]),
+        hasConsent(currentUserEmail),
+        getLogs(),
+        getTrainings()
+      ]);
+
+      // Awareness profiles calculation
+      let awarenessProfiles: any[] = [];
+      if (currentUserRole === 'USER') {
+        const userLogs = logs.filter(l => l.user === currentUserEmail);
+        const userTrainings = allTrainings.filter(t => t.userEmail === currentUserEmail);
+        awarenessProfiles = [AwarenessService.computeProfile(currentUserEmail, currentUserRole, userLogs, userTrainings)];
+      } else {
+        const userMap = new Map<string, { email: string; role: UserRole }>();
+        for (const u of PROTOTYPE_USERS) userMap.set(u.email, { email: u.email, role: u.role });
+        for (const log of logs) {
+          if (!userMap.has(log.user)) userMap.set(log.user, { email: log.user, role: log.user_role || 'USER' });
+        }
+        awarenessProfiles = Array.from(userMap.values()).map(u => {
+          const userLogs = logs.filter(l => l.user === u.email);
+          const userTrainings = allTrainings.filter(t => t.userEmail === u.email);
+          return AwarenessService.computeProfile(u.email, u.role, userLogs, userTrainings);
+        });
+        awarenessProfiles.sort((a, b) => a.awarenessScore - b.awarenessScore);
+      }
+
+      const currentUserProfile = awarenessProfiles.find(p => p.userEmail === currentUserEmail) || awarenessProfiles[0] || null;
+      const effectiveLogs = currentUserRole === 'USER' ? logs.filter(l => l.user === currentUserEmail) : logs;
+      const providersList = providerRegistry.getProviders();
+
+      res.json({
+        systemStatus: settings.systemStatus || 'active',
+        policies,
+        rules,
+        dlpPolicy: dlp,
+        organization: org,
+        apiKeys: keys,
+        hasUserConsent: !!consented,
+        events: effectiveLogs,
+        awarenessModules: AwarenessService.getModules(),
+        awarenessProfiles,
+        currentUserProfile,
+        providers: providersList,
+        activeProviderId: providerRegistry.getActiveProvider().id,
+        activeProviderName: providerRegistry.getActiveProvider().name,
+        isProviderMock: providerRegistry.getActiveProvider().type === 'mock'
+      });
+    } catch (e: any) {
+      console.error('Failed to bootstrap state:', e);
+      res.status(500).json({ error: 'Failed to bootstrap gateway state', message: e.message });
+    }
   });
 
   // -------------------------------------------------------------
