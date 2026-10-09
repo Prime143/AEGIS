@@ -336,7 +336,11 @@ export interface TrainingAssignment {
 
 export interface UserAwarenessProfile {
   userEmail: string;
+  name: string;
+  department: string;
+  accountType: 'HUMAN_EMPLOYEE' | 'SECURITY_ADMIN' | 'SERVICE_PRINCIPAL';
   userRole: UserRole;
+  isExemptFromMandatoryTraining?: boolean;
   totalInteractions: number;
   cleanInteractions: number;
   violationsCount: number;

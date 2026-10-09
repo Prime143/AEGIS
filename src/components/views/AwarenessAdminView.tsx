@@ -40,29 +40,40 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTier, setFilterTier] = useState<string>('ALL');
+  const [filterType, setFilterType] = useState<'HUMAN_EMPLOYEE' | 'SECURITY_ADMIN' | 'SERVICE_PRINCIPAL' | 'ALL'>('HUMAN_EMPLOYEE');
   const [selectedProfile, setSelectedProfile] = useState<UserAwarenessProfile | null>(null);
   const [isActionPending, setIsActionPending] = useState(false);
 
-  // Aggregate Stats
-  const totalEmployees = profiles.length;
+  // Human Employees baseline for realistic organizational statistics
+  const humanProfiles = profiles.filter(p => p.accountType === 'HUMAN_EMPLOYEE');
+  const totalEmployees = humanProfiles.length;
   const avgAwareness = totalEmployees > 0
-    ? Math.round(profiles.reduce((acc, p) => acc + p.awarenessScore, 0) / totalEmployees)
+    ? Math.round(humanProfiles.reduce((acc, p) => acc + p.awarenessScore, 0) / totalEmployees)
     : 100;
-  const highRiskCount = profiles.filter(p => p.postureTier === 'HIGH_RISK').length;
-  const needsCoachingCount = profiles.filter(p => p.postureTier === 'NEEDS_COACHING').length;
-  const totalCompletedTrainings = profiles.reduce(
+  const highRiskCount = humanProfiles.filter(p => p.postureTier === 'HIGH_RISK').length;
+  const needsCoachingCount = humanProfiles.filter(p => p.postureTier === 'NEEDS_COACHING').length;
+  const remediationRequiredCount = highRiskCount + needsCoachingCount;
+  const totalCompletedTrainings = humanProfiles.reduce(
     (acc, p) => acc + p.assignedModules.filter(m => m.status === 'COMPLETED').length,
     0
   );
 
+  // Segment Counts
+  const humanCount = humanProfiles.length;
+  const adminCount = profiles.filter(p => p.accountType === 'SECURITY_ADMIN').length;
+  const serviceCount = profiles.filter(p => p.accountType === 'SERVICE_PRINCIPAL').length;
+
   // Filtered List
   const filteredProfiles = profiles.filter(p => {
+    if (filterType !== 'ALL' && p.accountType !== filterType) return false;
     if (filterTier !== 'ALL' && p.postureTier !== filterTier) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const matchEmail = p.userEmail.toLowerCase().includes(q);
+      const matchName = p.name.toLowerCase().includes(q);
+      const matchDept = p.department.toLowerCase().includes(q);
       const matchGaps = p.primaryGaps.some(g => g.category.toLowerCase().includes(q));
-      return matchEmail || matchGaps;
+      return matchEmail || matchName || matchDept || matchGaps;
     }
     return true;
   });
@@ -88,7 +99,7 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
             <span>Human Risk Management &amp; Security Awareness</span>
           </h2>
           <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-            Automated posture profiling analyzing prompt patterns, recurring blind spots, and prescribed just-in-time micro-training.
+            Continuous behavioral posture assessment identifying recurring blind spots and prescribing just-in-time micro-training for enterprise personnel.
           </p>
         </div>
 
@@ -102,7 +113,7 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
         )}
       </div>
 
-      {/* KPI Stats Bar */}
+      {/* KPI Stats Bar (Based on Active Human Workforce) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
           <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Average Awareness</div>
@@ -112,32 +123,79 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
           }`}>
             {avgAwareness} / 100
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">Organization-wide index</div>
+          <div className="text-[11px] text-slate-500 mt-1">Human workforce index</div>
         </div>
 
         <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
           <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Active Employees</div>
           <div className="text-2xl font-bold font-mono text-slate-100 mt-1.5">{totalEmployees}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Monitored profiles</div>
+          <div className="text-[11px] text-slate-500 mt-1">Monitored corporate personnel</div>
         </div>
 
         <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
           <div className="text-xs font-semibold text-amber-400 uppercase tracking-wider flex items-center space-x-1">
             <AlertTriangle className="w-3.5 h-3.5" />
-            <span>Needs Coaching</span>
+            <span>Requires Remediation</span>
           </div>
-          <div className="text-2xl font-bold font-mono text-amber-400 mt-1.5">{needsCoachingCount}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Targeted training recommended</div>
+          <div className="text-2xl font-bold font-mono text-amber-400 mt-1.5">{remediationRequiredCount}</div>
+          <div className="text-[11px] text-slate-500 mt-1">
+            {highRiskCount} high risk &middot; {needsCoachingCount} coaching
+          </div>
         </div>
 
         <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
           <div className="text-xs font-semibold text-emerald-400 uppercase tracking-wider flex items-center space-x-1">
             <CheckCircle className="w-3.5 h-3.5" />
-            <span>Modules Completed</span>
+            <span>Remediated Modules</span>
           </div>
           <div className="text-2xl font-bold font-mono text-emerald-400 mt-1.5">{totalCompletedTrainings}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Remediated knowledge gaps</div>
+          <div className="text-[11px] text-slate-500 mt-1">Micro-courses completed</div>
         </div>
+      </div>
+
+      {/* Account Type Directory Segment Pills */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3 text-xs">
+        <span className="text-slate-400 mr-2 font-medium">Directory Scope:</span>
+        <button
+          onClick={() => setFilterType('HUMAN_EMPLOYEE')}
+          className={`px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
+            filterType === 'HUMAN_EMPLOYEE'
+              ? 'bg-cyan-600 text-slate-950 font-semibold shadow-sm'
+              : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+          }`}
+        >
+          Human Employees ({humanCount})
+        </button>
+        <button
+          onClick={() => setFilterType('SECURITY_ADMIN')}
+          className={`px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
+            filterType === 'SECURITY_ADMIN'
+              ? 'bg-cyan-600 text-slate-950 font-semibold shadow-sm'
+              : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+          }`}
+        >
+          SecOps Operators ({adminCount})
+        </button>
+        <button
+          onClick={() => setFilterType('SERVICE_PRINCIPAL')}
+          className={`px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
+            filterType === 'SERVICE_PRINCIPAL'
+              ? 'bg-cyan-600 text-slate-950 font-semibold shadow-sm'
+              : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+          }`}
+        >
+          Service Principals &amp; Bots ({serviceCount})
+        </button>
+        <button
+          onClick={() => setFilterType('ALL')}
+          className={`px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
+            filterType === 'ALL'
+              ? 'bg-cyan-600 text-slate-950 font-semibold shadow-sm'
+              : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+          }`}
+        >
+          All Directory Accounts ({profiles.length})
+        </button>
       </div>
 
       {/* Search & Filter Header */}
@@ -148,7 +206,7 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by employee email or identified risk category..."
+            placeholder="Search by employee name, email, department, or blind spot category..."
             className="w-full bg-transparent text-slate-200 placeholder-slate-500 focus:outline-none"
           />
           {searchQuery && (
@@ -177,22 +235,23 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
       <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
         <div className="flex justify-between items-center mb-3 text-xs">
           <span className="text-slate-400">
-            Showing <span className="text-slate-200 font-bold">{filteredProfiles.length}</span> of {profiles.length} employee posture profiles
+            Showing <span className="text-slate-200 font-bold">{filteredProfiles.length}</span> of {profiles.length} profiles
+            {filterType === 'HUMAN_EMPLOYEE' && <span className="text-cyan-400 font-medium ml-1.5">&middot; Human Workforce Focus</span>}
           </span>
           <span className="text-[11px] text-slate-500">Continuous behavioral risk monitoring</span>
         </div>
 
         {filteredProfiles.length === 0 ? (
           <div className="py-12 text-center text-slate-500 text-xs">
-            No employee profiles match the selected filters.
+            No profiles match the selected scope and filters.
           </div>
         ) : (
           <div className="overflow-x-auto text-xs">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-slate-800 text-[11px] text-slate-400">
-                  <th className="pb-2.5 font-medium">EMPLOYEE</th>
-                  <th className="pb-2.5 font-medium">ROLE</th>
+                  <th className="pb-2.5 font-medium">PERSONNEL &amp; DEPARTMENT</th>
+                  <th className="pb-2.5 font-medium">CLASSIFICATION</th>
                   <th className="pb-2.5 font-medium">AWARENESS SCORE</th>
                   <th className="pb-2.5 font-medium">POSTURE TIER</th>
                   <th className="pb-2.5 font-medium">INTERCEPTIONS</th>
@@ -209,7 +268,9 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
 
                   const primaryGapName = p.primaryGaps.length > 0
                     ? p.primaryGaps[0].category
-                    : 'None (Clean)';
+                    : p.accountType === 'SECURITY_ADMIN'
+                    ? 'Authorized Drill Testing'
+                    : 'None (Clean Usage)';
 
                   return (
                     <tr
@@ -218,16 +279,31 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
                       className="hover:bg-slate-800/40 cursor-pointer transition-colors"
                     >
                       <td className="py-3 text-slate-200 font-medium">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px] text-slate-300 font-bold shrink-0">
-                            {p.userEmail.charAt(0).toUpperCase()}
+                        <div className="flex items-center space-x-2.5">
+                          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 ${
+                            p.accountType === 'SECURITY_ADMIN' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' :
+                            p.accountType === 'SERVICE_PRINCIPAL' ? 'bg-slate-900 text-slate-400 border border-slate-800' :
+                            'bg-slate-800 text-slate-200 border border-slate-700'
+                          }`}>
+                            {p.name.charAt(0)}
                           </div>
-                          <span className="truncate max-w-[200px]">{p.userEmail}</span>
+                          <div>
+                            <div className="font-semibold text-slate-100 flex items-center space-x-1.5">
+                              <span>{p.name}</span>
+                              {p.isExemptFromMandatoryTraining && (
+                                <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 uppercase font-mono">
+                                  Exempt
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-[11px] text-slate-400">{p.department} &middot; <span className="font-mono text-slate-500">{p.userEmail}</span></div>
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 text-slate-400">
                         <span className="text-[10px] px-2 py-0.5 rounded bg-slate-950 border border-slate-800">
-                          {p.userRole}
+                          {p.accountType === 'HUMAN_EMPLOYEE' ? 'Human Personnel' :
+                           p.accountType === 'SECURITY_ADMIN' ? 'SecOps Lead' : 'Service Principal'}
                         </span>
                       </td>
                       <td className="py-3">
@@ -264,7 +340,7 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
                         )}
                       </td>
                       <td className="py-3 text-slate-300">
-                        <span className="truncate max-w-[150px] block">
+                        <span className="truncate max-w-[170px] block font-medium">
                           {primaryGapName}
                         </span>
                       </td>

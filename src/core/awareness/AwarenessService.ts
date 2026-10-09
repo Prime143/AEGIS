@@ -100,6 +100,22 @@ export const ENTERPRISE_TRAINING_MODULES: TrainingModule[] = [
   }
 ];
 
+// Corporate Enterprise Directory mapping
+const ENTERPRISE_DIRECTORY: Record<string, { name: string; department: string; accountType: 'HUMAN_EMPLOYEE' | 'SECURITY_ADMIN' | 'SERVICE_PRINCIPAL' }> = {
+  'current.user@nexus-corp.com': { name: 'Alex Rivera', department: 'Software Engineering', accountType: 'HUMAN_EMPLOYEE' },
+  'developer@nexus-corp.com': { name: 'Marcus Vance', department: 'Core Infrastructure', accountType: 'HUMAN_EMPLOYEE' },
+  'hr@nexus-corp.com': { name: 'Sarah Jenkins', department: 'People Operations & HR', accountType: 'HUMAN_EMPLOYEE' },
+  'finance@nexus-corp.com': { name: 'Elena Rostova', department: 'Financial Planning & Analysis', accountType: 'HUMAN_EMPLOYEE' },
+  'marketing@nexus-corp.com': { name: 'Liam Gallagher', department: 'Growth & Brand Marketing', accountType: 'HUMAN_EMPLOYEE' },
+  'legal@nexus-corp.com': { name: 'Rachel Adams', department: 'Corporate Legal & Compliance', accountType: 'HUMAN_EMPLOYEE' },
+  'analyst@nexus-corp.com': { name: 'David Mercer', department: 'Cyber Defense Center (SOC)', accountType: 'SECURITY_ADMIN' },
+  'admin.soc@nexus-corp.com': { name: 'Lead Security Administrator', department: 'SecOps & Red Team', accountType: 'SECURITY_ADMIN' },
+  'test-user': { name: 'Automated CI Test Harness', department: 'DevOps Automated Pipeline', accountType: 'SERVICE_PRINCIPAL' },
+  'gdpr.test@nexus-corp.com': { name: 'GDPR Compliance Test Bot', department: 'Quality Assurance Testing', accountType: 'SERVICE_PRINCIPAL' },
+  'integrationtestservicebot.service@nexus-corp.com': { name: 'Integration Service Principal', department: 'Service-to-Service Automation', accountType: 'SERVICE_PRINCIPAL' },
+  'testserviceapp.service@nexus-corp.com': { name: 'Backend Daemon Principal', department: 'Service-to-Service Automation', accountType: 'SERVICE_PRINCIPAL' },
+};
+
 export class AwarenessService {
   /**
    * Retrieves all available security training modules in the curriculum
@@ -116,6 +132,44 @@ export class AwarenessService {
   }
 
   /**
+   * Resolves employee identity and department from directory or email format
+   */
+  static resolveEmployeeInfo(email: string, role: UserRole): { name: string; department: string; accountType: 'HUMAN_EMPLOYEE' | 'SECURITY_ADMIN' | 'SERVICE_PRINCIPAL' } {
+    if (ENTERPRISE_DIRECTORY[email]) {
+      return ENTERPRISE_DIRECTORY[email];
+    }
+
+    const lower = email.toLowerCase();
+    if (lower.includes('.service') || lower.includes('servicebot') || lower.includes('testservice') || lower.startsWith('test-') || lower.startsWith('dlp-user-')) {
+      return {
+        name: email.split('@')[0].replace(/[-_.]/g, ' ').toUpperCase(),
+        department: 'Automated Service & Testing',
+        accountType: 'SERVICE_PRINCIPAL'
+      };
+    }
+
+    if (role === 'ADMIN' || lower.includes('admin') || lower.includes('soc')) {
+      return {
+        name: 'Security Operations Lead',
+        department: 'Security & Compliance',
+        accountType: 'SECURITY_ADMIN'
+      };
+    }
+
+    // Format human name from email (e.g. john.doe@... -> John Doe)
+    const rawName = email.split('@')[0];
+    const formatted = rawName.split(/[._-]/)
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(' ');
+
+    return {
+      name: formatted || 'Enterprise Colleague',
+      department: 'Corporate Operations',
+      accountType: 'HUMAN_EMPLOYEE'
+    };
+  }
+
+  /**
    * Computes an individual employee's security awareness posture profile,
    * calculating their awareness score, primary knowledge gaps, tailored training
    * recommendations, and an explainable executive coaching report.
@@ -126,6 +180,7 @@ export class AwarenessService {
     userLogs: LogEvent[],
     userTrainings: TrainingAssignment[] = []
   ): UserAwarenessProfile {
+    const { name, department, accountType } = this.resolveEmployeeInfo(userEmail, userRole);
     const totalInteractions = userLogs.length;
     const cleanInteractions = userLogs.filter(l => l.action === 'ALLOW').length;
     const violationsCount = userLogs.filter(l => l.action !== 'ALLOW').length;
@@ -135,45 +190,20 @@ export class AwarenessService {
     // Count completions
     const completedTrainingsCount = userTrainings.filter(t => t.status === 'COMPLETED').length;
 
-    // Compute Awareness Score (0 to 100)
-    let score = 100;
-
-    if (totalInteractions === 0) {
-      // New user baseline
-      score = 95;
-    } else {
-      // Deduct for perimeter violations
-      score -= (blockedCount * 14); // Blocks are critical perimeter stops
-      score -= (maskedCount * 5);    // Masks are privacy/sanitization warnings
-
-      // Reward clean consistent compliant usage
-      const cleanBonus = Math.min(15, Math.floor(cleanInteractions / 3) * 2);
-      score += cleanBonus;
-
-      // Reward completed training remediation modules
-      score += (completedTrainingsCount * 10);
-
-      // Clamp between 15 and 100
-      score = Math.max(15, Math.min(100, Math.round(score)));
-    }
-
-    // Determine Posture Tier
-    let postureTier: 'EXEMPLARY' | 'GOOD' | 'NEEDS_COACHING' | 'HIGH_RISK';
-    if (score >= 90) {
-      postureTier = 'EXEMPLARY';
-    } else if (score >= 75) {
-      postureTier = 'GOOD';
-    } else if (score >= 50) {
-      postureTier = 'NEEDS_COACHING';
-    } else {
-      postureTier = 'HIGH_RISK';
-    }
-
-    // Identify Primary Knowledge Gaps from violation history
+    // Identify Primary Knowledge Gaps from violation history (with clean fallback)
     const gapMap: Record<string, number> = {};
     for (const log of userLogs) {
       if (log.action !== 'ALLOW') {
-        const cat = log.attack_type || 'General Policy';
+        let cat = log.attack_type;
+        if (!cat || cat === 'None' || cat === 'None (Clean)' || cat === 'General Traffic') {
+          if (log.reasons && log.reasons.some(r => r.toLowerCase().includes('consent'))) {
+            cat = 'Data Privacy & Consent';
+          } else if (log.reasons && log.reasons.length > 0) {
+            cat = log.reasons[0].split(':')[0].substring(0, 24);
+          } else {
+            cat = 'Perimeter Policy Stop';
+          }
+        }
         gapMap[cat] = (gapMap[cat] || 0) + 1;
       }
     }
@@ -192,6 +222,8 @@ export class AwarenessService {
           description = `Inclusion of live SQL injection or web attack test payloads (${count} event${count > 1 ? 's' : ''}).`;
         } else if (cat === 'CONFIDENTIAL_TECHNICAL') {
           description = `References to confidential internal codenames or project assets (${count} event${count > 1 ? 's' : ''}).`;
+        } else if (cat === 'Data Privacy & Consent') {
+          description = `Requests submitted without active data privacy & monitoring consent (${count} event${count > 1 ? 's' : ''}).`;
         }
         return {
           category: cat,
@@ -199,6 +231,36 @@ export class AwarenessService {
           description
         };
       });
+
+    // Special Handling: Security Admins conducting authorized security drills / penetration testing
+    const isSecurityAdmin = accountType === 'SECURITY_ADMIN';
+    const isServiceBot = accountType === 'SERVICE_PRINCIPAL';
+
+    let score = 100;
+    let postureTier: 'EXEMPLARY' | 'GOOD' | 'NEEDS_COACHING' | 'HIGH_RISK' = 'EXEMPLARY';
+
+    if (isSecurityAdmin) {
+      score = 98;
+      postureTier = 'EXEMPLARY';
+    } else if (isServiceBot) {
+      score = 95;
+      postureTier = 'GOOD';
+    } else if (totalInteractions === 0) {
+      score = 95;
+      postureTier = 'EXEMPLARY';
+    } else {
+      score -= (blockedCount * 14);
+      score -= (maskedCount * 5);
+      const cleanBonus = Math.min(15, Math.floor(cleanInteractions / 3) * 2);
+      score += cleanBonus;
+      score += (completedTrainingsCount * 10);
+      score = Math.max(15, Math.min(100, Math.round(score)));
+
+      if (score >= 90) postureTier = 'EXEMPLARY';
+      else if (score >= 75) postureTier = 'GOOD';
+      else if (score >= 50) postureTier = 'NEEDS_COACHING';
+      else postureTier = 'HIGH_RISK';
+    }
 
     // Determine Recommended Modules
     const recommendedModules: TrainingModule[] = [];
@@ -253,6 +315,10 @@ export class AwarenessService {
 
     return {
       userEmail,
+      name,
+      department,
+      accountType,
+      isExemptFromMandatoryTraining: isSecurityAdmin || isServiceBot,
       userRole,
       totalInteractions,
       cleanInteractions,
@@ -283,14 +349,22 @@ export class AwarenessService {
     gaps: Array<{ category: string; incidentCount: number }>,
     completed: number
   ): string {
-    const name = userEmail.split('@')[0];
+    const { name, accountType } = this.resolveEmployeeInfo(userEmail, 'USER');
+
+    if (accountType === 'SECURITY_ADMIN') {
+      return `${name} is a designated Cyber Defense & Security Lead. Gateway logs reflect authorized penetration testing, security validation drills, and firewall calibration conducted by SecOps. Administrative testing activity is exempt from employee training quotas.`;
+    }
+
+    if (accountType === 'SERVICE_PRINCIPAL') {
+      return `${name} is an automated service principal or testing harness. Service accounts operate via programmed API scripts and are governed via developer API key controls rather than human micro-learning.`;
+    }
 
     if (total === 0) {
       return `Welcome ${name}. You have not yet submitted prompts through the AEGIS security boundary. Your initial posture is Exemplary (${score}/100). We recommend reviewing the foundational module GEN-001 to familiarize yourself with enterprise AI acceptable use.`;
     }
 
     if (violations === 0) {
-      return `Excellent security posture! User ${name} has logged ${total} compliant interaction(s) with 0 policy violations (${score}/100 score). Consistent safe prompting habits have been demonstrated across all external AI routes. Baseline refresher training is available if desired.`;
+      return `Excellent security posture! Employee ${name} has logged ${total} compliant interaction(s) with 0 policy violations (${score}/100 score). Consistent safe prompting habits have been demonstrated across all external AI routes. Baseline refresher training is available if desired.`;
     }
 
     const gapNames = gaps.map(g => `${g.category} (${g.incidentCount})`).join(', ');
