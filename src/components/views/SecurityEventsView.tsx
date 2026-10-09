@@ -90,11 +90,11 @@ export const SecurityEventsView: React.FC<SecurityEventsViewProps> = ({
         {onExportEvents && (
           <button
             onClick={onExportEvents}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors cursor-pointer shrink-0"
-            title={userRole === 'USER' ? 'Download personal DSAR interaction records' : 'Export full security audit event log'}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors cursor-pointer shrink-0 border border-slate-700 hover:border-cyan-500/40"
+            title={userRole === 'USER' ? 'Download personal DSAR interaction records as official PDF' : 'Export full security audit event log as official PDF'}
           >
             <Download className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{userRole === 'USER' ? 'Export My Records (DSAR)' : 'Export Audit Log'}</span>
+            <span>{userRole === 'USER' ? 'Export My Records (PDF)' : 'Export Audit Log (PDF)'}</span>
           </button>
         )}
       </div>

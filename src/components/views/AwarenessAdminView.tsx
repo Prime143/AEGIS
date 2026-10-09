@@ -19,6 +19,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { UserAwarenessProfile, TrainingModule, UserRole } from '../../core/types';
+import { exportEmployeeDossierPdf } from '../../utils/pdfReports';
 
 interface AwarenessAdminViewProps {
   profiles: UserAwarenessProfile[];
@@ -79,14 +80,7 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
   });
 
   const handleExportDossier = (profile: UserAwarenessProfile) => {
-    const jsonStr = JSON.stringify(profile, null, 2);
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `aegis-security-awareness-${profile.userEmail.replace(/[@.]/g, '_')}-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    exportEmployeeDossierPdf(profile);
   };
 
   return (
@@ -345,15 +339,27 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
                         </span>
                       </td>
                       <td className="py-3 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProfile(p);
-                          }}
-                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-cyan-300 text-[11px] font-medium transition-colors"
-                        >
-                          View Report
-                        </button>
+                        <div className="flex items-center justify-end space-x-1.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleExportDossier(p);
+                            }}
+                            className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-cyan-300 text-[11px] font-medium transition-colors cursor-pointer"
+                            title="Download PDF Dossier"
+                          >
+                            <Download className="w-3.5 h-3.5 text-cyan-400" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProfile(p);
+                            }}
+                            className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-cyan-300 text-[11px] font-medium transition-colors cursor-pointer"
+                          >
+                            View Report
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -386,10 +392,11 @@ export const AwarenessAdminView: React.FC<AwarenessAdminViewProps> = ({
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => handleExportDossier(selectedProfile)}
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-slate-100"
-                  title="Export Dossier (JSON)"
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-semibold text-xs transition-colors cursor-pointer shadow-sm"
+                  title="Export Dossier as Official PDF"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PDF Dossier</span>
                 </button>
                 <button
                   onClick={() => setSelectedProfile(null)}

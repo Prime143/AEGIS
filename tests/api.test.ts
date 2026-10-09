@@ -8,6 +8,8 @@ process.env.AUTO_START_SERVER = 'false';
 process.env.NODE_ENV = 'test';
 
 import { startServer } from '../server';
+import { exportEmployeeDossierPdf, exportSecurityAuditPdf } from '../src/utils/pdfReports';
+import fs from 'fs';
 
 test('AEGIS HTTP API & Gateway Integration Test Suite', async (t) => {
   let serverInstance: http.Server;
@@ -496,6 +498,44 @@ test('AEGIS HTTP API & Gateway Integration Test Suite', async (t) => {
     const completed = await completeRes.json();
     assert.strictEqual(completed.status, 'COMPLETED');
     assert.ok(completed.completedAt);
+  });
+
+  await t.test('14. PDF Report Generator: Generates Employee Coaching Dossier and Security Audit PDFs', async () => {
+    // 1. Fetch Jordan Hayes awareness profile (DevOps with Credential violations)
+    const jordanRes = await fetch(`${baseUrl}/api/awareness/profile/${encodeURIComponent('jordan.hayes@nexus-corp.com')}`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    assert.strictEqual(jordanRes.status, 200);
+    const jordanProfile = await jordanRes.json();
+    assert.strictEqual(jordanProfile.userEmail, 'jordan.hayes@nexus-corp.com');
+    assert.strictEqual(jordanProfile.postureTier, 'HIGH_RISK');
+    assert.ok(jordanProfile.primaryGaps.some((g: any) => g.category === 'CREDENTIAL'));
+
+    // 2. Export Employee Dossier PDF (verifies no runtime error during document build)
+    assert.doesNotThrow(() => {
+      exportEmployeeDossierPdf(jordanProfile);
+    });
+
+    // 3. Export Security Audit Log PDF
+    const logsRes = await fetch(`${baseUrl}/api/logs`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    assert.strictEqual(logsRes.status, 200);
+    const logs = await logsRes.json();
+    assert.ok(Array.isArray(logs));
+    assert.ok(logs.length > 0);
+
+    assert.doesNotThrow(() => {
+      exportSecurityAuditPdf(logs, 'ADMIN', 'admin.soc@nexus-corp.com');
+    });
+
+    // Clean up any test PDF artifacts generated in workspace
+    const files = fs.readdirSync(process.cwd());
+    for (const f of files) {
+      if (f.startsWith('AEGIS_') && f.endsWith('.pdf')) {
+        try { fs.unlinkSync(f); } catch {}
+      }
+    }
   });
 });
 

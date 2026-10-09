@@ -15,6 +15,7 @@ import { UserCoachingView } from './components/views/UserCoachingView';
 import { LogEvent, EnterpriseRule, DlpPolicy, ApiKey } from '../database';
 import { PolicyRule, OrganizationContext, AIProviderMetadata, UserRole, UserAwarenessProfile, TrainingModule } from './core/types';
 import { GatewayInteractionResponse } from './core/gateway/GatewayPipeline';
+import { exportSecurityAuditPdf } from './utils/pdfReports';
 
 export default function App() {
   const [currentRole, setCurrentRole] = useState<UserRole>('ADMIN');
@@ -523,14 +524,8 @@ export default function App() {
 
   // Export Audit Logs (DSAR)
   const handleExportEvents = () => {
-    const jsonStr = JSON.stringify(events, null, 2);
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `aegis-audit-events-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    exportSecurityAuditPdf(events, currentRole, userEmail);
+    showNotification('Exported official Security Audit Report (PDF)');
   };
 
   return (

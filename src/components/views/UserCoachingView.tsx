@@ -11,9 +11,11 @@ import {
   ArrowRight,
   Lightbulb,
   FileText,
-  Shield
+  Shield,
+  Download
 } from 'lucide-react';
 import { UserAwarenessProfile, TrainingModule } from '../../core/types';
+import { exportEmployeeDossierPdf } from '../../utils/pdfReports';
 
 interface UserCoachingViewProps {
   profile: UserAwarenessProfile | null;
@@ -59,26 +61,37 @@ export const UserCoachingView: React.FC<UserCoachingViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-lg text-xs">
-          <span className="text-slate-400">Employee:</span>
-          {allProfiles.length > 0 && onSelectProfile ? (
-            <select
-              value={profile.userEmail}
-              onChange={(e) => {
-                const target = allProfiles.find(p => p.userEmail === e.target.value);
-                if (target) onSelectProfile(target);
-              }}
-              className="bg-transparent text-slate-200 font-semibold text-xs focus:outline-none cursor-pointer pr-1"
-            >
-              {allProfiles.map(p => (
-                <option key={p.userEmail} value={p.userEmail} className="bg-slate-900 text-slate-100">
-                  {p.name} ({p.department}) &mdash; {p.postureTier.replace('_', ' ')}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <span className="font-semibold text-slate-200">{profile.name} ({profile.department})</span>
-          )}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center space-x-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-lg text-xs">
+            <span className="text-slate-400">Employee:</span>
+            {allProfiles.length > 0 && onSelectProfile ? (
+              <select
+                value={profile.userEmail}
+                onChange={(e) => {
+                  const target = allProfiles.find(p => p.userEmail === e.target.value);
+                  if (target) onSelectProfile(target);
+                }}
+                className="bg-transparent text-slate-200 font-semibold text-xs focus:outline-none cursor-pointer pr-1"
+              >
+                {allProfiles.map(p => (
+                  <option key={p.userEmail} value={p.userEmail} className="bg-slate-900 text-slate-100">
+                    {p.name} ({p.department}) &mdash; {p.postureTier.replace('_', ' ')}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <span className="font-semibold text-slate-200">{profile.name} ({profile.department})</span>
+            )}
+          </div>
+
+          <button
+            onClick={() => exportEmployeeDossierPdf(profile)}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-semibold text-xs transition-colors cursor-pointer shrink-0 shadow-sm"
+            title="Download Official Security Coaching Report (PDF)"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Download PDF Report</span>
+          </button>
         </div>
       </div>
 

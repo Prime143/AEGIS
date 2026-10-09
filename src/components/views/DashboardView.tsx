@@ -8,10 +8,12 @@ import {
   ArrowRight, 
   CheckCircle, 
   XCircle,
-  Eye
+  Eye,
+  Download
 } from 'lucide-react';
 import { LogEvent } from '../../../database';
 import { PolicyRule } from '../../core/types';
+import { exportSecurityAuditPdf } from '../../utils/pdfReports';
 
 interface DashboardViewProps {
   events: LogEvent[];
@@ -66,13 +68,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             Perimeter boundary telemetry inspecting employee prompts and AI provider responses in real time.
           </p>
         </div>
-        <button
-          onClick={onNavigateToConsole}
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-semibold text-xs tracking-wide shadow-sm transition-all cursor-pointer shrink-0"
-        >
-          <span>OPEN AI CONSOLE</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => exportSecurityAuditPdf(events)}
+            className="flex items-center space-x-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 hover:border-cyan-500/40 transition-all cursor-pointer shrink-0"
+            title="Download Official Security Audit Log (PDF)"
+          >
+            <Download className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Audit Report (PDF)</span>
+          </button>
+          <button
+            onClick={onNavigateToConsole}
+            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-semibold text-xs tracking-wide shadow-sm transition-all cursor-pointer shrink-0"
+          >
+            <span>OPEN AI CONSOLE</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Primary KPI Metrics Grid */}
