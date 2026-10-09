@@ -1,0 +1,490 @@
+{
+  "manifestVersion": "1.0.0",
+  "researchQuestion": "How much does organization-specific adaptation improve sensitive-information detection in employee–AI prompts, and what does it cost to keep that detection local?",
+  "targetOrganization": "NOVA Systems",
+  "datasetVersion": "1.0.0",
+  "gitCommitHash": "748ca9d60037d59f475fb135fd0035da45549a28",
+  "executionTimestamp": "2026-10-05T12:56:30.255Z",
+  "deterministicSeed": 42,
+  "hardware": {
+    "cpu": "AMD Ryzen 5 7430U with Radeon Graphics",
+    "cores": 6,
+    "threads": 12,
+    "ramTotalMb": 15711,
+    "gpu": "AMD Radeon Graphics (Integrated)"
+  },
+  "software": {
+    "os": "Windows 11",
+    "nodeVersion": "v24.18.0",
+    "pythonVersion": "3.14.6",
+    "spacyVersion": "3.8.16",
+    "presidioVersion": "2.2.364"
+  },
+  "thresholds": {
+    "decisionThreshold": 0.5,
+    "presidioConfidenceThreshold": 0.4,
+    "thresholdTuningSplit": "DEV",
+    "evaluationSplit": "TEST"
+  },
+  "conditions": {
+    "B0": {
+      "conditionId": "B0",
+      "conditionName": "Regex + Dictionary Baseline",
+      "categoryType": "BASELINE",
+      "executionStatus": "EXECUTED",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 168,
+      "confusionMatrix": {
+        "truePositives": 22,
+        "falsePositives": 0,
+        "trueNegatives": 36,
+        "falseNegatives": 110
+      },
+      "metrics": {
+        "precision": 1,
+        "recall": 0.1667,
+        "f1Score": 0.2858,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0.8333
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 1,
+          "recall": 0.1667,
+          "f1Score": 0.2858,
+          "evaluated": 168
+        },
+        "deltaF1": -0.2858
+      },
+      "hardNegatives": {
+        "evaluated": 12,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {
+        "PII": {
+          "support": 12,
+          "detected": 6,
+          "recall": 0.5,
+          "falseNegatives": 6
+        },
+        "secrets": {
+          "support": 25,
+          "detected": 16,
+          "recall": 0.64,
+          "falseNegatives": 9
+        },
+        "internal identifiers": {
+          "support": 41,
+          "detected": 0,
+          "recall": 0,
+          "falseNegatives": 41
+        },
+        "confidential technical/financial information": {
+          "support": 54,
+          "detected": 0,
+          "recall": 0,
+          "falseNegatives": 54
+        },
+        "benign": {
+          "support": 36,
+          "specificity": 1,
+          "falsePositives": 0
+        }
+      },
+      "latencyMs": {
+        "p50": 0.01,
+        "p95": 0.02,
+        "mean": 0.03
+      },
+      "memoryUsage": {
+        "heapUsedMb": 1.01,
+        "rssMb": 86.25
+      },
+      "timestamp": "2026-10-05T12:56:24.983Z"
+    },
+    "B1": {
+      "conditionId": "B1",
+      "conditionName": "Microsoft Presidio Baseline (with Custom Recognizers)",
+      "categoryType": "BASELINE",
+      "executionStatus": "EXECUTED",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 168,
+      "confusionMatrix": {
+        "true_positives": 123,
+        "false_positives": 19,
+        "true_negatives": 17,
+        "false_negatives": 9
+      },
+      "metrics": {
+        "precision": 0.8662,
+        "recall": 0.9318,
+        "f1Score": 0.8978,
+        "falsePositiveRate": 0.5278,
+        "falseNegativeRate": 0.0682
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0.8662,
+          "recall": 0.9318,
+          "f1Score": 0.8978,
+          "evaluated": 168
+        },
+        "deltaF1": -0.8978
+      },
+      "hardNegatives": {
+        "evaluated": 12,
+        "false_positives": 9,
+        "fpr": 0.75
+      },
+      "perClass": {
+        "PII": {
+          "support": 12,
+          "recall": 1,
+          "false_negatives": 0,
+          "detected": 12
+        },
+        "secrets": {
+          "support": 25,
+          "recall": 0.92,
+          "false_negatives": 2,
+          "detected": 23
+        },
+        "internal identifiers": {
+          "support": 41,
+          "recall": 0.9756,
+          "false_negatives": 1,
+          "detected": 40
+        },
+        "confidential technical/financial information": {
+          "support": 54,
+          "recall": 0.8889,
+          "false_negatives": 6,
+          "detected": 48
+        },
+        "benign": {
+          "support": 36,
+          "specificity": 0.4722,
+          "false_positives": 19
+        }
+      },
+      "latencyMs": {
+        "p50": 14.1,
+        "p95": 22.65,
+        "mean": 17.8
+      },
+      "memoryUsage": {
+        "heapUsedMb": 9.93,
+        "rssMb": 10.45
+      },
+      "timestamp": "2026-10-05T12:56:30Z"
+    },
+    "B2": {
+      "conditionId": "B2",
+      "conditionName": "OpenAI Privacy Filter / Moderation Baseline",
+      "categoryType": "BASELINE",
+      "executionStatus": "INTERFACE_AUDITED_NO_CUSTOM_DLP_SUPPORT",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 0,
+      "confusionMatrix": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "trueNegatives": 0,
+        "falseNegatives": 0
+      },
+      "metrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1Score": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "deltaF1": 0
+      },
+      "hardNegatives": {
+        "evaluated": 0,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {},
+      "latencyMs": {
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "modelMetadata": {
+        "modelName": "omni-moderation-latest",
+        "modelVersion": "2024-09-26",
+        "parameterCount": "Proprietary Cloud",
+        "quantization": "N/A",
+        "trainingMethod": "Reinforcement Learning from Human Feedback (RLHF) Safety Fine-Tuning",
+        "trainingFramework": "OpenAI Internal",
+        "inferenceFramework": "OpenAI Hosted API",
+        "hardware": "Cloud Infrastructure",
+        "softwareVersions": "OpenAI API v1"
+      },
+      "timestamp": "2026-10-05T12:56:30.255Z"
+    },
+    "B3": {
+      "conditionId": "B3",
+      "conditionName": "Cloud LLM Reference Condition (Gemini 2.5 Flash / GPT-4o)",
+      "categoryType": "BASELINE",
+      "executionStatus": "API_KEY_NOT_CONFIGURED",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 0,
+      "confusionMatrix": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "trueNegatives": 0,
+        "falseNegatives": 0
+      },
+      "metrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1Score": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "deltaF1": 0
+      },
+      "hardNegatives": {
+        "evaluated": 0,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {},
+      "latencyMs": {
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "modelMetadata": {
+        "modelName": "gemini-2.5-flash",
+        "modelVersion": "gemini-2.5-flash-001",
+        "parameterCount": "Proprietary Cloud Mixture-of-Experts",
+        "quantization": "FP8 / Cloud",
+        "trainingMethod": "Pre-training + Task-Specific System Prompting with NOVA Context",
+        "trainingFramework": "Google DeepMind Internal",
+        "inferenceFramework": "Google GenAI SDK (@google/genai)",
+        "hardware": "Google TPU v5e Pods",
+        "softwareVersions": "@google/genai ^1.29.0"
+      },
+      "timestamp": "2026-10-05T12:56:30.255Z"
+    },
+    "A0": {
+      "conditionId": "A0",
+      "conditionName": "A0: Local Generic SLM (Zero Adaptation)",
+      "categoryType": "ADAPTATION_LADDER",
+      "executionStatus": "ENVIRONMENT_MISSING_DEPENDENCIES",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 0,
+      "confusionMatrix": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "trueNegatives": 0,
+        "falseNegatives": 0
+      },
+      "metrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1Score": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "deltaF1": 0
+      },
+      "hardNegatives": {
+        "evaluated": 0,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {},
+      "latencyMs": {
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "modelMetadata": {
+        "modelName": "meta-llama/Llama-3.2-1B-Instruct",
+        "modelVersion": "1.0.0",
+        "parameterCount": "1.23 Billion",
+        "quantization": "Q4_K_M (4-bit GGUF)",
+        "hardware": "AMD Ryzen 5 7430U (6 Cores, 12 Threads, 16GB RAM)",
+        "softwareVersions": "Python 3.14.6, Windows 11, Node v24.18.0",
+        "trainingMethod": "Zero Adaptation (Pre-trained Base Model + Generic Task Prompt)",
+        "trainingFramework": "None (Off-the-shelf)",
+        "inferenceFramework": "llama.cpp / onnxruntime-genai (Local CPU execution)"
+      },
+      "timestamp": "2026-10-05T12:56:30.255Z"
+    },
+    "A1": {
+      "conditionId": "A1",
+      "conditionName": "A1: Local SLM + In-Context Adaptation (Policy + Glossary + Examples)",
+      "categoryType": "ADAPTATION_LADDER",
+      "executionStatus": "ENVIRONMENT_MISSING_DEPENDENCIES",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 0,
+      "confusionMatrix": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "trueNegatives": 0,
+        "falseNegatives": 0
+      },
+      "metrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1Score": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "deltaF1": 0
+      },
+      "hardNegatives": {
+        "evaluated": 0,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {},
+      "latencyMs": {
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "modelMetadata": {
+        "modelName": "meta-llama/Llama-3.2-1B-Instruct",
+        "modelVersion": "1.0.0",
+        "parameterCount": "1.23 Billion",
+        "quantization": "Q4_K_M (4-bit GGUF)",
+        "hardware": "AMD Ryzen 5 7430U (6 Cores, 12 Threads, 16GB RAM)",
+        "softwareVersions": "Python 3.14.6, Windows 11, Node v24.18.0",
+        "trainingMethod": "In-Context Adaptation (System Prompt with NOVA Classification Hierarchy, Seen Glossary, and 3 Few-Shot Demonstrations)",
+        "trainingFramework": "Prompt Engineering / In-Context Learning",
+        "inferenceFramework": "llama.cpp / onnxruntime-genai (Local CPU execution)"
+      },
+      "timestamp": "2026-10-05T12:56:30.255Z"
+    },
+    "A2": {
+      "conditionId": "A2",
+      "conditionName": "A2: Local SLM Fine-Tuned (QLoRA Parameter Adaptation)",
+      "categoryType": "ADAPTATION_LADDER",
+      "executionStatus": "ENVIRONMENT_MISSING_DEPENDENCIES",
+      "datasetSplit": "TEST",
+      "totalEvaluated": 0,
+      "confusionMatrix": {
+        "truePositives": 0,
+        "falsePositives": 0,
+        "trueNegatives": 0,
+        "falseNegatives": 0
+      },
+      "metrics": {
+        "precision": 0,
+        "recall": 0,
+        "f1Score": 0,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0
+      },
+      "seenVsUnseen": {
+        "seen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "unseen": {
+          "precision": 0,
+          "recall": 0,
+          "f1Score": 0,
+          "evaluated": 0
+        },
+        "deltaF1": 0
+      },
+      "hardNegatives": {
+        "evaluated": 0,
+        "falsePositives": 0,
+        "fpr": 0
+      },
+      "perClass": {},
+      "latencyMs": {
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "modelMetadata": {
+        "modelName": "meta-llama/Llama-3.2-1B-Instruct",
+        "modelVersion": "1.0.0",
+        "parameterCount": "1.23 Billion",
+        "quantization": "Q4_K_M (4-bit GGUF)",
+        "hardware": "AMD Ryzen 5 7430U (6 Cores, 12 Threads, 16GB RAM)",
+        "softwareVersions": "Python 3.14.6, Windows 11, Node v24.18.0",
+        "trainingMethod": "QLoRA Parameter Adaptation (Fine-tuned on TRAIN split, Rank r=16, Alpha=32, target modules: q_proj, v_proj, k_proj, o_proj)",
+        "trainingFramework": "PyTorch + HuggingFace PEFT / bitsandbytes",
+        "inferenceFramework": "llama.cpp with merged LoRA adapter"
+      },
+      "timestamp": "2026-10-05T12:56:30.255Z"
+    }
+  }
+}

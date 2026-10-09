@@ -1,0 +1,3366 @@
+{
+  "B0": [
+    {
+      "id": "nova-0027",
+      "text": "In classical Greek mythology, the Chimera was a monstrous fire-breathing hybrid creature composed of lion, goat, and serpent.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 2.302,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0028",
+      "text": "Project Chimera directed-energy pulse repetition interval must remain locked between 120Hz and 140Hz to prevent emitter overheating.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 1.058,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0029",
+      "text": "A genetic chimera is a single organism composed of cells with more than one distinct genotype resulting from zygotic fusion.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.043,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0030",
+      "text": "Verify whether the beam modulation schema for Project Chimera has been uploaded to grid-quantum.internal.novasystems.net.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.022,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0031",
+      "text": "The paleontologists debated whether the fossil specimen was a genuine transitional species or an anatomical chimera.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0032",
+      "text": "Assign Jira issue NOVA-PAYLOAD-9011 to senior staff for Project Chimera thermal dissipation simulation.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0033",
+      "text": "Hyperion is a chaotic tumbling moon of Saturn characterized by an irregular spongy appearance and low density.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0034",
+      "text": "The Project Hyperion optical laser downlink achieves 40 Gbps aggregate throughput across low Earth orbit relays.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0035",
+      "text": "The Hyperion Cantos is an acclaimed science fiction series written by Dan Simmons featuring the enigmatic Shrike.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0036",
+      "text": "Debug the quantum key distribution negotiation phase in repository novasys-optics/laser-downlink for Project Hyperion.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0037",
+      "text": "The coast redwood known as Hyperion in Northern California holds the record as the worlds tallest living tree at 115 meters.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0038",
+      "text": "Review the phase jitter calibration tolerances for Project Hyperion ground tracking stations in Australasia.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0039",
+      "text": "In Greek and Roman mythology, Cerberus was the multi-headed hound that guarded the entrance to the underworld.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0040",
+      "text": "Project Cerberus enforces mutual TLS and ephemeral SPIFFE identities across all tactical edge nodes.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.014,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0041",
+      "text": "Cerberus was an obsolete northern constellation created by Johannes Hevelius depicting three serpents held by Hercules.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0042",
+      "text": "Commit the updated firewall rule tables for Project Cerberus to secure-broker.prod.novasystems.net.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0043",
+      "text": "The harpy eagle possesses rear talons measuring up to 13 centimeters, enabling it to snatch arboreal mammals from trees.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0044",
+      "text": "The Project Talon tender offer proposes purchasing AeroPrecision Corp outstanding shares at $42.50 per share in cash.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0045",
+      "text": "The Northrop T-38 Talon is a twin-engine supersonic jet trainer utilized extensively by the United States Air Force and NASA.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0046",
+      "text": "Prepare the confidential antitrust disclosure filing for Project Talon before the investment banking syndicate meeting.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0047",
+      "text": "The Sentinel-6 Michael Freilich satellite was launched in November 2020 to measure global sea level rise using radar altimetry.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0048",
+      "text": "The Sentinel-6 sensor fusion subsystem integrates synthetic aperture radar with electro-optical tracking at 120 FPS.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0049",
+      "text": "Public climate data from the Jason-3 and Sentinel-6 satellite series is distributed openly by EUMETSAT and NOAA.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0050",
+      "text": "Calibration coefficients for sensor NV-SENSOR-S6 on the Sentinel-6 mast must be verified against dark-field baseline noise.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0071",
+      "text": "Please draft tax documents for candidate Zoe Zimmerman, SSN 198-44-3210, joining our optical payload engineering unit.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.045,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0072",
+      "text": "Verify identity of defense analyst Nathanial Drake: personal cellular +1-206-555-9832 and passport number Z7729104.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.022,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0073",
+      "text": "Draft termination notice and pension disbursement calculation for employee badge NV-EMP-99104 with 22 years service.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0074",
+      "text": "Audit executive corporate jet manifest: Chief Technology Officer Victoria Vance (SSN 512-88-0091) traveled to Edwards AFB.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0075",
+      "text": "Process confidential mental health counseling reimbursement for employee badge NV-EMP-33109 under EAP program.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0076",
+      "text": "Direct deposit authorization for contractor Gregory House: Routing 021000021, Account 4401928371 at Chase Bank.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0077",
+      "text": "Prepare candidate NDA and drug screening consent form for applicant Liam OConnor, mobile phone 303-555-8822.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0078",
+      "text": "Emergency notification dispatched to spouse of injured technician: contact Mrs. Beverly Crusher at 415-555-1701.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0079",
+      "text": "The confidential whistleblower report references senior director Anthony DiNozzo, badge NV-EMP-11002, regarding supplier kickbacks.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.02,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0080",
+      "text": "Summarize compensation committee resolution: VP Engineering base compensation revised to $320,000 plus performance bonus.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0098",
+      "text": "Authenticate to high-throughput laser telemetry cluster: postgresql://unseen_telemetry:ChimeraBeamPass909!@grid-quantum.internal.novasystems.net:5432/quantum_optics.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.014,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0099",
+      "text": "Audit AWS production credentials for satellite constellation: AKIA5UNSEENHYPERION99 with secret key zZ819401/unseenLaserDownlinkKey.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0100",
+      "text": "Verify internal microservice bearer token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJub3ZhLWNlcmJlcnVzLWdhdGV3YXkiLCJzdWIiOiJ1bnNlZW4ifQ.unseenSignature.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.014,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0101",
+      "text": "The Project Cerberus tactical mesh node private key is:\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHY7...\n-----END EC PRIVATE KEY-----\nPush to edge secure enclave.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.014,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0102",
+      "text": "Push firmware payload using GitHub deployment token: ghp_UnseenGitHubTokenForLaserConstellationRelease99812.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0103",
+      "text": "Configure production API key for satellite uplink gateway: nova_sec_live_unseen_hyperion_8819024871902bbff.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0104",
+      "text": "Validate MySQL master replica connection: mysql://root:CerberusRootPass2026#@secure-broker.prod.novasystems.net:3306/classified_ledger.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0105",
+      "text": "Update Twilio production alert secret: TWILIO_AUTH_TOKEN=unseen_twilio_token_901928401924801928401924 for field incident pages.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0106",
+      "text": "Review Kubernetes service account secret token: k8s_token_unseen_cluster_tactical_edge_node_09_novasystems_net.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0107",
+      "text": "The SSH host private key for edge station edge-node-09.tactical.novasystems.net is compromised and must be revoked immediately.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0124",
+      "text": "Inspect commit history on repository novasys-optics/laser-downlink regarding beam steering closed-loop servo stability.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0125",
+      "text": "Please prioritize Jira ticket NOVA-PAYLOAD-9011 regarding pulsed beam diode cooling jacket pressure drop.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0126",
+      "text": "Provision new high-performance worker nodes on cluster grid-quantum.internal.novasystems.net for Monte Carlo flight simulations.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0127",
+      "text": "The optical sensor package NV-SENSOR-S6 failed dark-current calibration in thermal chamber 3 at minus 40 Celsius.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0128",
+      "text": "Clone internal repository novasys-payload/strike-core to analyze the arming sequence state machine transitions.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0129",
+      "text": "Audit user access permissions on edge host secure-broker.prod.novasystems.net for external contractor accounts.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0130",
+      "text": "Track bug report NOVA-OPTICS-2144 detailing adaptive optics wave-front sensor latency spikes during gimbal slew.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0131",
+      "text": "Deploy container image novasys-edge/cerberus-mesh:v2.1 to remote tactical host edge-node-09.tactical.novasystems.net.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0132",
+      "text": "Review circuit board layout revisions for experimental payload module NV-PAYLOAD-MOD4 before PCB fabrication order.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0133",
+      "text": "Close incident ticket NOVA-DIR-5510 concerning telemetry packet checksum failures on tactical satellite links.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0152",
+      "text": "Project Chimera solid-state laser cavity achieves 150 kilowatt beam output with active dielectric liquid cooling loops.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0153",
+      "text": "Analyze the beam jitter stabilization algorithm in Project Chimera utilizing fast steering mirrors at 2.5 kHz bandwidth.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0154",
+      "text": "The Project Hyperion space-to-ground optical communications link uses dual-polarization quadrature phase shift keying modulation.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0155",
+      "text": "Synthesize the atmospheric turbulence phase compensation matrix for the Project Hyperion optical ground receiving telescope.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0156",
+      "text": "Project Cerberus microsegmentation architecture dynamically isolates compromised tactical nodes within 200 microseconds of anomaly detection.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0157",
+      "text": "The Sentinel-6 sensor fusion algorithm merges synthetic aperture radar Doppler returns with infrared focal plane imagery for low-observable track generation.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0158",
+      "text": "The Project Talon confidential takeover valuation allocates $88M cash to purchase 100% of AeroPrecision Corp shares.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0159",
+      "text": "Prepare financial sensitivity tables modeling Project Talon EPS accretion under conservative vs aggressive synergy assumptions.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0160",
+      "text": "The confidential Q4 board packet forecasts defense contract backlog reaching $420M driven by international satellite orders.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0161",
+      "text": "Review the confidential tax haven structuring analysis for European distribution of Project Hyperion ground terminals.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0182",
+      "text": "Explain how the Transformer self-attention mechanism scales quadratically with input sequence length.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0183",
+      "text": "What are the thermodynamic differences between Brayton cycle and Rankine cycle heat engines?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.037,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0184",
+      "text": "How do I configure PostgreSQL streaming replication between a primary and read replica using repmgr?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0185",
+      "text": "Write an algorithm in C++ to find the strongly connected components of a directed graph using Tarjans method.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0186",
+      "text": "What are the main aerodynamic design features of supercritical airfoils that delay transonic wave drag?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0187",
+      "text": "How does the IEEE 802.11ax Wi-Fi 6 standard utilize OFDMA to improve multi-user throughput efficiency?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0188",
+      "text": "Explain the principles of zero-knowledge proofs and how zk-SNARKs enable verifiable computation without data disclosure.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0189",
+      "text": "What is the role of the cerebellum in fine motor coordination and balance in human neuroanatomy?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0190",
+      "text": "Draft a polite response to a vendor requesting an extension on an RFP submission deadline by two business days.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0191",
+      "text": "How does the Linux epoll system call achieve O(1) event notification compared to select and poll?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0198",
+      "text": "Candidate Zoe Zimmerman (SSN 198-44-3210) was assigned Jira issue NOVA-PAYLOAD-9011 to review Project Chimera laser cavity schematics.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.014,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0199",
+      "text": "Connect with secret key zZ819401/unseenLaserDownlinkKey to grid-quantum.internal.novasystems.net to download Project Hyperion optical frame specs.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0200",
+      "text": "Review repository novasys-payload/strike-core containing the $88M Project Talon tender valuation and antitrust risk analysis.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0201",
+      "text": "Defense analyst Nathanial Drake (passport Z7729104) uploaded Project Cerberus mesh configuration to secure-broker.prod.novasystems.net.",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0232",
+      "text": "How does the Project Chimera directed energy emitter handle thermal dissipation during continuous pulsing?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0233",
+      "text": "Calculate the heat exchanger coolant flow rate needed to keep Project Chimera optics below 60 degrees Celsius.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0234",
+      "text": "Analyze the thermal shock risk to the optical lenses during emergency Project Chimera shutdown sequences.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0235",
+      "text": "What are the critical thermal failure thresholds defined in the Project Chimera payload engineering manual?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0236",
+      "text": "Draft a simulation script in Python to model the heat dissipation curve of the Project Chimera pulse generator.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0237",
+      "text": "What is the optical link budget margin for Project Hyperion under cloudy tropospheric conditions?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0238",
+      "text": "Summarize the ground station tracking handover protocol used by Project Hyperion low Earth orbit satellites.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0239",
+      "text": "Troubleshoot the bit error rate degradation observed during the Project Hyperion 40 Gbps downlink demonstration.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0240",
+      "text": "How does Project Hyperion synchronize laser frequency offsets between the satellite beacon and ground receiver?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.019,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0241",
+      "text": "Review the proprietary adaptive optics phase control loop implemented in the Project Hyperion terminal.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0242",
+      "text": "How does Project Cerberus prevent lateral network traversal when an edge drone node is captured in the field?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0243",
+      "text": "Explain the cryptographic handshaking used by Project Cerberus to authenticate ad-hoc tactical ground stations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0244",
+      "text": "Optimize the eBPF packet filter rules configured inside the Project Cerberus microsegmentation agent.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0245",
+      "text": "Does Project Cerberus maintain encrypted audit trails when network connectivity to central command is severed?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0246",
+      "text": "Draft a zero-trust network policy rule for Project Cerberus restricting outbound UDP telemetry ports.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0247",
+      "text": "What is the premium over market capitalization offered in the confidential Project Talon tender bid?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0248",
+      "text": "Analyze the regulatory antitrust filing requirements for Project Talon under Hart-Scott-Rodino regulations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0249",
+      "text": "How will NOVA Systems finance the $88M cash portion of the Project Talon acquisition proposal?",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0250",
+      "text": "Summarize the key defense customer contracts currently held by AeroPrecision that justify Project Talon.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0251",
+      "text": "Draft an internal risk matrix evaluating hostile defense takeover countermeasures against Project Talon.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0377",
+      "text": "Review the export-controlled ITAR telemetry data for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0378",
+      "text": "Sync production container deployment on hyperion-downlink.station.novasystems.net from main branch of repository novasys-edge/cerberus-mesh.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0379",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-PAYLOAD-9193 regarding optical beam jitter under atmospheric thermal blooming.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0380",
+      "text": "Verify secret signing key sk-unseen-hyperion-87a89dafffcfc21f07dac5d7 before issuing telemetry commands.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.017,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0381",
+      "text": "What are the key differences between synchronous and induction electric motors used in aerospace actuation?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0382",
+      "text": "Calculate the power consumption profile for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.166,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0383",
+      "text": "Sync production container deployment on edge-node-09.tactical.novasystems.net from main branch of repository novasys-corp/talon-acquisition.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0384",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-DIR-4431 regarding infrared focal plane array cryogenic cooler power draw.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.018,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0385",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@chimera-optics.lab.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.026,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0386",
+      "text": "Explain the working principle of a Stirling engine and its theoretical Carnot efficiency comparison.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0387",
+      "text": "Draft confidential technical risk assessment for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0388",
+      "text": "Sync production container deployment on edge-node-09.tactical.novasystems.net from main branch of repository novasys-corp/talon-acquisition.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0389",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-DIR-4735 regarding zero-trust tactical certificate revocation propagation delays.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0390",
+      "text": "Export tactical API authorization key nova_sec_unseen_prod_6932bb4ef695afeb5e8e325f8f0a9f4f3f48634f to the secure telemetry daemon.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0391",
+      "text": "What are the physiological effects of high altitude hypobaric hypoxia on human arterial oxygen saturation?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0392",
+      "text": "Calculate the power consumption profile for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0393",
+      "text": "Sync production container deployment on edge-node-09.tactical.novasystems.net from main branch of repository novasys-optics/laser-downlink.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0394",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-DIR-9097 regarding confidential valuation discrepancy in patent portfolio appraisal.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0395",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@grid-quantum.internal.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0396",
+      "text": "Explain the concept of quantum entanglement and the violation of Bell inequalities in physics experiments.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0397",
+      "text": "Draft confidential technical risk assessment for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0398",
+      "text": "Sync production container deployment on hyperion-downlink.station.novasystems.net from main branch of repository novasys-edge/cerberus-mesh.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0399",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-OPTICS-2461 regarding infrared focal plane array cryogenic cooler power draw.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0400",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@grid-quantum.internal.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0401",
+      "text": "How do I calculate the shear stress distribution in an I-beam under transverse mechanical loading?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0402",
+      "text": "Optimize the real-time sensor processing pipeline in Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0403",
+      "text": "Sync production container deployment on edge-node-09.tactical.novasystems.net from main branch of repository novasys-payload/strike-core.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0404",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-MERGER-7532 regarding zero-trust tactical certificate revocation propagation delays.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0405",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@chimera-optics.lab.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.012,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0406",
+      "text": "What are the key differences between synchronous and induction electric motors used in aerospace actuation?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0407",
+      "text": "Calculate the power consumption profile for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0408",
+      "text": "Sync production container deployment on grid-quantum.internal.novasystems.net from main branch of repository novasys-corp/talon-acquisition.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0409",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-MERGER-9386 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0410",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@chimera-optics.lab.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0411",
+      "text": "What are the key differences between synchronous and induction electric motors used in aerospace actuation?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0412",
+      "text": "Calculate the power consumption profile for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0413",
+      "text": "Sync production container deployment on edge-node-09.tactical.novasystems.net from main branch of repository novasys-optics/laser-downlink.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0414",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-MERGER-2791 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0415",
+      "text": "Export tactical API authorization key nova_sec_unseen_prod_9986656b19aaed7c27a63fe6ee17d47c5b5f0fb7 to the secure telemetry daemon.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0416",
+      "text": "Summarize the core themes and character arcs in Dostoyevskys novel The Brothers Karamazov.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0417",
+      "text": "Calculate the power consumption profile for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0418",
+      "text": "Sync production container deployment on secure-broker.prod.novasystems.net from main branch of repository novasys-optics/laser-downlink.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.028,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0419",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-TACTICAL-2398 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0420",
+      "text": "Export tactical API authorization key nova_sec_unseen_prod_0c1b875a94cdba759f4664a53ac8fde986d40902 to the secure telemetry daemon.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0421",
+      "text": "What are the aerodynamic benefits of raked wingtips compared to conventional blended winglets on commercial airliners?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.178,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0422",
+      "text": "Synthesize the flight envelope safety limits for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0423",
+      "text": "Sync production container deployment on secure-broker.prod.novasystems.net from main branch of repository novasys-corp/talon-acquisition.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0424",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-DIR-7450 regarding infrared focal plane array cryogenic cooler power draw.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0425",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@edge-node-09.tactical.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.011,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0426",
+      "text": "How does CRISPR-Cas9 achieve targeted double-strand DNA cleavage in molecular biology research?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0427",
+      "text": "Synthesize the flight envelope safety limits for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.008,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0428",
+      "text": "Sync production container deployment on hyperion-downlink.station.novasystems.net from main branch of repository novasys-payload/strike-core.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.016,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0429",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-OPTICS-9966 regarding confidential valuation discrepancy in patent portfolio appraisal.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0430",
+      "text": "Export tactical API authorization key nova_sec_unseen_prod_3433efa6c29795777a3ac9252d18c4071c73988d to the secure telemetry daemon.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0431",
+      "text": "Explain the working principle of a Stirling engine and its theoretical Carnot efficiency comparison.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0432",
+      "text": "Review the export-controlled ITAR telemetry data for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0433",
+      "text": "Sync production container deployment on chimera-optics.lab.novasystems.net from main branch of repository novasys-edge/cerberus-mesh.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.018,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0434",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-PAYLOAD-3449 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0435",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@grid-quantum.internal.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.018,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0436",
+      "text": "What are the aerodynamic benefits of raked wingtips compared to conventional blended winglets on commercial airliners?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.016,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0437",
+      "text": "Draft confidential technical risk assessment for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0438",
+      "text": "Sync production container deployment on secure-broker.prod.novasystems.net from main branch of repository novasys-sensor/sentinel-fusion.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0439",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-OPTICS-8010 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0440",
+      "text": "Export tactical API authorization key nova_sec_unseen_prod_023ff55eb3529ebcdbb3463f28d5efb238e6d109 to the secure telemetry daemon.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.01,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0441",
+      "text": "Explain the concept of quantum entanglement and the violation of Bell inequalities in physics experiments.",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0442",
+      "text": "Review the export-controlled ITAR telemetry data for Project Chimera during autonomous test range operations.",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.008,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0443",
+      "text": "Sync production container deployment on secure-broker.prod.novasystems.net from main branch of repository novasys-optics/laser-downlink.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0444",
+      "text": "Review the confidential attachments and root cause analysis in Jira issue NOVA-PAYLOAD-2746 regarding laser diode array current transient overshoots.",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 0.015,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0445",
+      "text": "Authenticate to tactical edge database postgresql://tactical_operator:CerberusSecure2026!@edge-node-09.tactical.novasystems.net:5432/mission_db.",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 0.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0446",
+      "text": "What are the aerodynamic benefits of raked wingtips compared to conventional blended winglets on commercial airliners?",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 0.049,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    }
+  ],
+  "B1": [
+    {
+      "id": "nova-0027",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 413.759,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0028",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.404,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0029",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 14.714,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0030",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.866,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0031",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 16.072,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0032",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 53.197,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0033",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 14.436,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0034",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.092,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0035",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.657,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0036",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0037",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 18.111,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0038",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.772,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0039",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 14.262,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0040",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.747,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0041",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 15.009,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0042",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.028,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0043",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 18.825,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0044",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 18.093,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0045",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 15.556,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0046",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.371,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0047",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 14.875,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0048",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 14.222,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0049",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 15.801,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0050",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 21.157,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": true
+    },
+    {
+      "id": "nova-0071",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 41.06,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0072",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 25.236,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0073",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.916,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0074",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 26.066,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0075",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.479,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0076",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 48.227,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0077",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 23.814,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0078",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 26.867,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0079",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 17.824,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0080",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.873,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0098",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 86.494,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0099",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.513,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0100",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.994,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0101",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 17.137,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0102",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.758,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0103",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.637,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0104",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.343,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0105",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.58,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0106",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.2,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0107",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.83,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0124",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.333,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0125",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.786,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0126",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.192,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0127",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.028,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0128",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.752,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0129",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.336,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0130",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.638,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0131",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.889,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0132",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.817,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0133",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.772,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0152",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.055,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0153",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.774,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0154",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 14.278,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0155",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.884,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0156",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 14.346,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0157",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.138,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0158",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.082,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0159",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.697,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0160",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.96,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0161",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.857,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0182",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.448,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0183",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 12.817,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0184",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.396,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0185",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.811,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0186",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.683,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0187",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 14.764,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0188",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 14.926,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0189",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.568,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0190",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 14.005,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0191",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.878,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0198",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 19.426,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0199",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.817,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0200",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.5,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0201",
+      "text": "",
+      "goldClass": "PII",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.7,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0232",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.994,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0233",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.216,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0234",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.496,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0235",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.504,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0236",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.941,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0237",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.552,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0238",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.978,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0239",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 13.622,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0240",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.906,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0241",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.734,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0242",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.545,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0243",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.857,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0244",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.329,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0245",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 13.862,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0246",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.386,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0247",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 13.02,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0248",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.759,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0249",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.778,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0250",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.578,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0251",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.773,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0377",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.567,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0378",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.77,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0379",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.468,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0380",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": false,
+      "latencyMs": 14.08,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0381",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.741,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0382",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.23,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0383",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.249,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0384",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.8,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0385",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.622,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0386",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 14.313,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0387",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 20.095,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0388",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.912,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0389",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.447,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0390",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.063,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0391",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.188,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0392",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.778,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0393",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.811,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0394",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.256,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0395",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 10.933,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0396",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.799,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0397",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.761,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0398",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.73,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0399",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.863,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0400",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 10.996,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0401",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.851,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0402",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.879,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0403",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.657,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0404",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.671,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0405",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.002,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0406",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 11.761,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0407",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.35,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0408",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.701,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0409",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.613,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0410",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.354,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0411",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 11.676,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0412",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 10.974,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0413",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.266,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0414",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.229,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0415",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.132,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0416",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 13.945,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0417",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.034,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0418",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.263,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0419",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.609,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0420",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.712,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0421",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 14.589,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0422",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.298,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0423",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.091,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0424",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.991,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0425",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.487,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0426",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 14.288,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0427",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.457,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0428",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.104,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0429",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.774,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0430",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.515,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0431",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 11.854,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0432",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.065,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0433",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.887,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0434",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 15.369,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0435",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.463,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0436",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 11.766,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0437",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.576,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0438",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 13.119,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0439",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 16.474,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0440",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.176,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0441",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": true,
+      "latencyMs": 12.252,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0442",
+      "text": "",
+      "goldClass": "confidential technical/financial information",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.201,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0443",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 12.933,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0444",
+      "text": "",
+      "goldClass": "internal identifiers",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 14.516,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0445",
+      "text": "",
+      "goldClass": "secrets",
+      "isGoldSensitive": true,
+      "predSensitive": true,
+      "latencyMs": 11.553,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    },
+    {
+      "id": "nova-0446",
+      "text": "",
+      "goldClass": "benign",
+      "isGoldSensitive": false,
+      "predSensitive": false,
+      "latencyMs": 12.013,
+      "seenOrUnseen": "UNSEEN",
+      "isHardNegative": false
+    }
+  ]
+}

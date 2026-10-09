@@ -1,0 +1,30 @@
+{
+  "organization": "NOVA Systems",
+  "total_examples": 446,
+  "splits": {
+    "TRAIN": 199,
+    "DEV": 79,
+    "TEST": 168
+  },
+  "classes": {
+    "PII": 59,
+    "secrets": 51,
+    "internal identifiers": 113,
+    "confidential technical/financial information": 129,
+    "benign": 94
+  },
+  "seen_unseen": {
+    "SEEN": 278,
+    "UNSEEN": 168
+  },
+  "hard_negatives": {
+    "total_hard_negative_examples": 50,
+    "distinct_pairs": 25
+  },
+  "annotation_status": "PENDING HUMAN VALIDATION",
+  "deterministic_seed": 42,
+  "leakage_prevention": {
+    "unseen_in_train_or_dev": 0,
+    "paraphrase_families_split_isolation": "STRICTLY ENFORCED (Zero leakage)"
+  }
+}

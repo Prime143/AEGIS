@@ -38,6 +38,22 @@ async function runTests() {
   console.log("🛡️  AEGIS PII & SECRET SANITIZATION TESTS 🛡️");
   console.log("==========================================");
   
+  // Register user consent before running prompts
+  try {
+    await fetch('http://localhost:3000/api/consent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({ email: 'test-user', granted: true })
+    });
+    console.log("✅ Privacy Consent registered for test-user.");
+  } catch (e) {
+    console.error(`\n❌ Could not connect to API. Is 'npm run dev' running on port 3000?`);
+    return;
+  }
+  
   let passed = 0;
   
   for (let i = 0; i < PROMPTS.length; i++) {
@@ -106,6 +122,243 @@ async function runTests() {
       console.error(`\n❌ Could not connect to API. Is 'npm run dev' running on port 3000?`);
       return;
     }
+  }
+  
+  // Verify that withdrawing consent blocks request processing
+  console.log("\n==========================================");
+  console.log("⚖️  VERIFYING CONSENT BLOCK (GDPR / DPDP)  ⚖️");
+  console.log("==========================================");
+  try {
+    await fetch('http://localhost:3000/api/consent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({ email: 'test-user', granted: false })
+    });
+    
+    const response = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        text: "Simple query",
+        user: 'test-user'
+      })
+    });
+    const result = await response.json();
+    
+    if (result.action === 'BLOCK' && result.attack_type === 'Privacy Consent Required') {
+      console.log("✅ PASSED: Prompt successfully blocked when consent is withdrawn.");
+    } else {
+      console.log("❌ FAILED: Gateway processed prompt without active user consent!");
+    }
+  } catch (e) {
+    console.error("❌ FAILED: Error executing consent checks.", e);
+  }
+  
+  // Verify Dynamic API Key creation and analysis access
+  console.log("\n==========================================");
+  console.log("🔑  VERIFYING DEVELOPER API KEYS AUTH     🔑");
+  console.log("==========================================");
+  try {
+    const genRes = await fetch('http://localhost:3000/api/keys', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({ name: 'TestServiceApp', createdBy: 'TestRunner' })
+    });
+    const keyData = await genRes.json();
+    console.log(`✅ Generated Developer API Key: ${keyData.key} (${keyData.name})`);
+
+    const testPromptRes = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${keyData.key}`
+      },
+      body: JSON.stringify({
+        text: 'Routine automated health query.'
+      })
+    });
+    
+    const testResult = await testPromptRes.json();
+    if (testPromptRes.status === 200 && testResult.action === 'ALLOW') {
+      console.log("✅ PASSED: Successfully analyzed query using generated dynamic developer API Key.");
+      console.log("✅ PASSED: GDPR Consent check bypassed for service-to-service key interaction.");
+    } else {
+      console.log("❌ FAILED: Analyzer rejected valid dynamic key query or threw error:", testResult);
+    }
+
+    const revokeRes = await fetch(`http://localhost:3000/api/keys/${keyData.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      }
+    });
+    const revokeResult = await revokeRes.json();
+    if (revokeResult.success) {
+      console.log("✅ PASSED: Successfully revoked developer API Key.");
+    } else {
+      console.log("❌ FAILED: Could not revoke API Key.");
+    }
+
+    const blockedPromptRes = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${keyData.key}`
+      },
+      body: JSON.stringify({
+        text: 'Query with revoked key.'
+      })
+    });
+    
+    if (blockedPromptRes.status === 401) {
+      console.log("✅ PASSED: Request successfully blocked with 401 Unauthorized for revoked API key.");
+    } else {
+      console.log("❌ FAILED: Revoked key still has access to analyzer! Status code:", blockedPromptRes.status);
+    }
+
+  } catch (e) {
+    console.error("❌ FAILED: Error executing developer API Key tests.", e);
+  }
+  
+  // Verify Granular DLP Shield Policies (Phase 4)
+  console.log("\n==========================================");
+  console.log("🛡️  VERIFYING DYNAMIC DLP SHIELD POLICIES 🛡️");
+  console.log("==========================================");
+  try {
+    // 1. Grant consent for clean test identities
+    for (const testUser of ['dlp-user-block', 'dlp-user-redact', 'dlp-user-disabled']) {
+      await fetch('http://localhost:3000/api/consent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+        },
+        body: JSON.stringify({ email: testUser, granted: true })
+      });
+    }
+
+    // 2. Fetch original DLP policy configuration to restore at the end
+    const getRes = await fetch('http://localhost:3000/api/dlp', {
+      headers: { 'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026' }
+    });
+    const originalPolicy = await getRes.json();
+    console.log("✅ Retrieved original DLP Policy settings.");
+
+    // 3. Set SSN scanner to ENABLED and action to BLOCK
+    await fetch('http://localhost:3000/api/dlp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        ssn: { enabled: true, action: 'BLOCK' }
+      })
+    });
+    
+    // Test SSN blocking
+    const ssnBlockRes = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        text: "The user SSN is 123-45-6789.",
+        user: 'dlp-user-block'
+      })
+    });
+    const ssnBlockData = await ssnBlockRes.json();
+    if (ssnBlockData.action === 'BLOCK') {
+      console.log("✅ PASSED: SSN prompt was blocked under active SSN BLOCK policy.");
+    } else {
+      console.log("❌ FAILED: SSN prompt was not blocked under active SSN BLOCK policy! Action:", ssnBlockData.action);
+    }
+
+    // 4. Set SSN scanner to ENABLED and action to REDACT
+    await fetch('http://localhost:3000/api/dlp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        ssn: { enabled: true, action: 'REDACT' }
+      })
+    });
+
+    // Test SSN redaction
+    const ssnRedactRes = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        text: "The user SSN is 123-45-6789.",
+        user: 'dlp-user-redact'
+      })
+    });
+    const ssnRedactData = await ssnRedactRes.json();
+    if (ssnRedactData.action === 'MODIFIED' && ssnRedactData.rewritten_prompt.includes('[REDACTED_SSN]')) {
+      console.log("✅ PASSED: SSN prompt was redacted/masked under active SSN REDACT policy.");
+    } else {
+      console.log("❌ FAILED: SSN prompt was not properly redacted under active SSN REDACT policy! Action:", ssnRedactData.action, "Prompt:", ssnRedactData.rewritten_prompt);
+    }
+
+    // 5. Disable SSN scanner
+    await fetch('http://localhost:3000/api/dlp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        ssn: { enabled: false, action: 'BLOCK' }
+      })
+    });
+
+    // Test SSN bypassed
+    const ssnDisabledRes = await fetch('http://localhost:3000/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify({
+        text: "The user SSN is 123-45-6789.",
+        user: 'dlp-user-disabled'
+      })
+    });
+    const ssnDisabledData = await ssnDisabledRes.json();
+    if (ssnDisabledData.action === 'ALLOW' && ssnDisabledData.rewritten_prompt.includes('123-45-6789')) {
+      console.log("✅ PASSED: SSN prompt bypassed security filters when SSN scanner is disabled.");
+    } else {
+      console.log("❌ FAILED: SSN prompt was blocked or modified when scanner is disabled! Action:", ssnDisabledData.action, "Prompt:", ssnDisabledData.rewritten_prompt);
+    }
+
+    // 6. Restore original policy
+    await fetch('http://localhost:3000/api/dlp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AEGIS_SECURE_TOKEN_2026'
+      },
+      body: JSON.stringify(originalPolicy)
+    });
+    console.log("✅ Restored original DLP Policy settings.");
+
+  } catch (e) {
+    console.error("❌ FAILED: Error executing dynamic DLP policy tests.", e);
   }
   
   console.log("\n==========================================");

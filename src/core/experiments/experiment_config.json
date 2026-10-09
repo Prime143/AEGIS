@@ -1,0 +1,52 @@
+{
+  "experimentName": "AEGIS Controlled Detector Benchmark",
+  "targetOrganization": "NOVA Systems",
+  "datasetSplits": {
+    "train": "datasets/nova_systems/nova_research_dataset.json (split=TRAIN, N=199)",
+    "dev": "datasets/nova_systems/nova_research_dataset.json (split=DEV, N=79)",
+    "test": "datasets/nova_systems/nova_research_dataset.json (split=TEST, N=168)"
+  },
+  "randomSeed": 42,
+  "decisionCriteria": {
+    "decisionThreshold": 0.5,
+    "presidioConfidenceThreshold": 0.4,
+    "tuningRule": "Thresholds selected on DEV split; strictly frozen for TEST evaluation"
+  },
+  "conditions": [
+    {
+      "id": "B0",
+      "name": "Regex + Dictionary Baseline",
+      "status": "EXECUTED"
+    },
+    {
+      "id": "B1",
+      "name": "Microsoft Presidio Baseline (with Custom Recognizers)",
+      "status": "EXECUTED"
+    },
+    {
+      "id": "B2",
+      "name": "OpenAI Privacy Filter Baseline",
+      "status": "INTERFACE_AUDITED_NO_CUSTOM_DLP_SUPPORT"
+    },
+    {
+      "id": "B3",
+      "name": "Cloud LLM Reference Condition",
+      "status": "API_KEY_NOT_CONFIGURED"
+    },
+    {
+      "id": "A0",
+      "name": "Local Generic SLM (Llama-3.2-1B-Instruct)",
+      "status": "ENVIRONMENT_MISSING_DEPENDENCIES"
+    },
+    {
+      "id": "A1",
+      "name": "Local In-Context Adapted SLM (Llama-3.2-1B-Instruct)",
+      "status": "ENVIRONMENT_MISSING_DEPENDENCIES"
+    },
+    {
+      "id": "A2",
+      "name": "Local Fine-Tuned SLM (Llama-3.2-1B-Instruct + QLoRA)",
+      "status": "ENVIRONMENT_MISSING_DEPENDENCIES"
+    }
+  ]
+}
